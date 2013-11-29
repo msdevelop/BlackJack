@@ -16,13 +16,17 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 
 public class MenuView extends JFrame implements Observer
 {
+	// constructor---------------------------------------------------
+	
 	public MenuView(MenuController controller)
 	{
+		setMinimumSize(new Dimension(150, 215));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("BlackJack");
+		setTitle("Menu Black Jack");
 		getContentPane().setLayout(null);
 		
 		JLabel lblMen = new JLabel("Men\u00FC:");
@@ -38,14 +42,15 @@ public class MenuView extends JFrame implements Observer
 		JButton ExitButton = new JButton("Exit");
 		ExitButton.addActionListener(controller);
 		
-		ExitButton.setBounds(10, 94, 110, 23);
+		ExitButton.setBounds(10, 104, 110, 23);
 		getContentPane().add(ExitButton);
 		
 	}
+	
+	// methods---------------------------------------------------------
 
 	@Override
     public void update(Observable arg0, Object arg1) {
-	    // TODO Auto-generated method stub
 	    
     }
 }

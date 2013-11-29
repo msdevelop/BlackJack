@@ -7,13 +7,19 @@ import Views.MenuView;
 
 public class MenuController implements ActionListener
 {
-	private MenuView view;
+	// declaration---------------------------------------
+	
+	private MenuView menuView;
+	
+	// constructor---------------------------------------
 	
 	public MenuController()
 	{
-		this.view = new MenuView(this);
-		this.view.setVisible(true);
+		this.menuView = new MenuView(this);
+		this.menuView.setVisible(true);
 	}
+	
+	// methods-------------------------------------------
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 
