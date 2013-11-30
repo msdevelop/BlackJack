@@ -13,7 +13,8 @@ public class GameController implements ActionListener
 	// declaration--------------------------------
 
 	private GameView	gameView;
-	private CardModel[]	beginCardStack	= new CardModel[52];
+	private CardModel[]	beginCardStack	= new CardModel[52], playerStack = new CardModel[10], dealerStack = new CardModel[10];
+	private int			playerBet, playerCount, dealerCount;
 
 	// constructor--------------------------------
 
@@ -51,15 +52,65 @@ public class GameController implements ActionListener
 	public void initializeGame()
 	{
 		this.initializeCardStack();
-		this.getBet();
+		this.getBetInput();
+		this.playGame();
 	}
 
 	// ----------------------------------------------
 
-	public int getBet() // returns the bet placed by the player
+	public void playGame()
 	{
-		gameView.getBet();
+		this.generateStartCards();
+	}
+	
+	public void generateStartCards() // TODO verify if chosen card has counter < 6; else generate new randomPos
+	{
+		playerCount = 0;
+		dealerCount = 0;
+		
+		for(int i = 0; i < 2; i++)
+		{
+			int randomPos = generateRandomNumber();
+			playerStack[playerCount] = beginCardStack[randomPos];
+			playerCount++;
+		}
+		
+		int randomPos = generateRandomNumber();
+		dealerStack[dealerCount] = beginCardStack[randomPos];
+		
+	}
+	
+	public int generateRandomNumber()
+	{
 		return 1;
+	}
+
+	// ----------------------------------------------
+
+	public void disableBet() // disables the button btnSetBet
+	{
+		gameView.disableBtnSetBet();
+	}
+
+	public void activateGameBtns() // activates hit and stay btn
+	{
+		gameView.activateHitStay();
+	}
+
+	// ----------------------------------------------
+
+	public void getBetInput() // gets the bet placed by the player
+	{
+		if (gameView.verifyBet())
+		{
+			playerBet = gameView.getBet();
+			gameView.setTextStatusBar("Einsatz: " + playerBet);
+			gameView.setBetStatus(Integer.toString(playerBet));
+			this.disableBet();
+			this.activateGameBtns();
+		}
+		else
+			gameView.setTextStatusBar("Ungültiger Wetteinsatz!");
 	}
 
 	// ----------------------------------------------
@@ -89,7 +140,8 @@ public class GameController implements ActionListener
 
 			for (int iNumber = 2; iNumber < 11; iNumber++)
 			{
-				beginCardStack[index] = new CardModel(color + " " + iNumber, iNumber);
+				beginCardStack[index] = new CardModel(color + " " + iNumber,
+						iNumber);
 
 				index++;
 			}
