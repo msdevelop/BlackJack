@@ -4,13 +4,13 @@ public class CardModel
 {
 	// declaration------------------------------
 	
-	private String name;
+	private String name, color;
 	private int value;
 	private boolean flag;
 	
 	// constructor------------------------------
 	
-	public CardModel(String inputName, int inputValue, boolean inputFlag)
+	public CardModel(String inputName, int inputValue, boolean inputFlag, String inputColor)
 	{
 		name = inputName;
 		value = inputValue;
@@ -34,11 +34,21 @@ public class CardModel
 		flag = newFlag;
 	}
 	
+	public void setColor(String newColor)
+	{
+		color = newColor;
+	}
+	
 	// get-block--------------------------------
 	
 	public String getName()
 	{
 		return name;
+	}
+	
+	public String getColor()
+	{
+		return color;
 	}
 	
 	public int getValue()

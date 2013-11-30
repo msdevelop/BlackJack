@@ -28,6 +28,7 @@ public class MenuController implements ActionListener
 		if(e.getActionCommand().equals("Neues Spiel"))
 		{
 			new GameController();
+			this.menuView.dispose();
 			
 		}else if(e.getActionCommand().equals("Exit"))
 		{

@@ -8,80 +8,108 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JSlider;
+import java.awt.BorderLayout;
+import javax.swing.JSplitPane;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.JDesktopPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JLayeredPane;
+import javax.swing.JInternalFrame;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.TextArea;
+import java.awt.Canvas;
+import javax.swing.JMenuBar;
+import java.awt.Color;
+import javax.swing.JMenuItem;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTextPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import java.awt.Cursor;
+import javax.swing.JTable;
+import javax.swing.JTree;
 
 public class GameView extends JFrame
 {
-	// declaration---------------------------------------------------------------------------------
-	
-	private JTextField textField;
 	
 	// constructor----------------------------------------------------------------------------------
 	
 	public GameView(GameController controller) {
-		setMinimumSize(new Dimension(500, 400));
-		setTitle("Game Black Jack");
+		setMinimumSize(new Dimension(750, 530));
 		getContentPane().setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(20, 93, 86, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(258, 0, 8, 662);
+		getContentPane().add(separator);
 		
-		JLabel lblEinsatz = new JLabel("Einsatz:");
-		lblEinsatz.setBounds(20, 75, 46, 14);
+		JTextPane textPane = new JTextPane();
+		textPane.setEditable(false);
+		textPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		textPane.setText("100");
+		textPane.setBounds(165, 47, 72, 25);
+		getContentPane().add(textPane);
+		
+		JLabel lblHeadline = new JLabel("\u00DCberschrift f\u00FCr dieses Fenster");
+		lblHeadline.setBounds(49, 11, 151, 25);
+		getContentPane().add(lblHeadline);
+		
+		JLabel lblChipcount = new JLabel("Chipcount:");
+		lblChipcount.setBounds(26, 57, 72, 14);
+		getContentPane().add(lblChipcount);
+		
+		JLabel lblEinsatz = new JLabel("Bet:");
+		lblEinsatz.setBounds(26, 120, 59, 14);
 		getContentPane().add(lblEinsatz);
 		
-		JLabel lblVerfgbareChips = new JLabel("Verf\u00FCgbare Chips");
-		lblVerfgbareChips.setBounds(20, 50, 86, 14);
-		getContentPane().add(lblVerfgbareChips);
+		JTextPane textPane_1 = new JTextPane();
+		textPane_1.setBounds(165, 114, 72, 20);
+		getContentPane().add(textPane_1);
 		
-		JLabel lblAnzahlChips = new JLabel("Anzahl Chips");
-		lblAnzahlChips.setBounds(119, 50, 86, 14);
-		getContentPane().add(lblAnzahlChips);
+		JButton btnPlaceBet = new JButton("Place Bet");
+		btnPlaceBet.setBounds(159, 171, 89, 23);
+		getContentPane().add(btnPlaceBet);
 		
-		JButton btnSetzen = new JButton("Setzen");
-		btnSetzen.setBounds(116, 92, 89, 23);
-		getContentPane().add(btnSetzen);
+		JButton btnNewButton = new JButton("Leave table");
+		btnNewButton.setBounds(26, 218, 222, 23);
+		getContentPane().add(btnNewButton);
 		
-		JTextArea txtrGesetztegewonneneverloreneChips = new JTextArea();
-		txtrGesetztegewonneneverloreneChips.setEditable(false);
-		txtrGesetztegewonneneverloreneChips.setText("ges.\r\ngew.\r\nverl.\r\n\t Chips");
-		txtrGesetztegewonneneverloreneChips.setBounds(263, 45, 182, 76);
-		getContentPane().add(txtrGesetztegewonneneverloreneChips);
+		JTextPane txtpnKarteHerz = new JTextPane();
+		txtpnKarteHerz.setText("Karte 1: Herz Ass\r\nKarte 2: Karo 9");
+		txtpnKarteHerz.setBounds(324, 47, 351, 100);
+		getContentPane().add(txtpnKarteHerz);
 		
-		JTextArea txtrkarteAss = new JTextArea();
-		txtrkarteAss.setEditable(false);
-		txtrkarteAss.setText("1.Karte: Ass\r\n2.Karte: 7\r\n\r\nSumme: 18");
-		txtrkarteAss.setBounds(20, 167, 185, 131);
-		getContentPane().add(txtrkarteAss);
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(258, 180, 481, 14);
+		getContentPane().add(separator_1);
 		
-		JLabel lblKartenbersicht = new JLabel("Karten\u00FCbersicht Spieler:");
-		lblKartenbersicht.setBounds(20, 142, 115, 14);
-		getContentPane().add(lblKartenbersicht);
+		JTextPane txtpnStatusBar = new JTextPane();
+		txtpnStatusBar.setText("Status Bar");
+		txtpnStatusBar.setBounds(286, 205, 412, 25);
+		getContentPane().add(txtpnStatusBar);
 		
-		JButton btnStay = new JButton("stay");
-		btnStay.setBounds(17, 309, 89, 23);
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(258, 266, 481, 14);
+		getContentPane().add(separator_2);
+		
+		JTextPane txtpnKartePik = new JTextPane();
+		txtpnKartePik.setText("Karte 1: Pik K\u00F6nig\r\nKarte 2: Kreuz 2");
+		txtpnKartePik.setBounds(324, 319, 351, 100);
+		getContentPane().add(txtpnKartePik);
+		
+		JButton btnStay = new JButton("Stay");
+		btnStay.setBounds(487, 430, 89, 23);
 		getContentPane().add(btnStay);
 		
-		JButton btnHit = new JButton("hit");
-		btnHit.setBounds(119, 309, 89, 23);
+		JButton btnHit = new JButton("Hit");
+		btnHit.setBounds(586, 430, 89, 23);
 		getContentPane().add(btnHit);
-		
-		JTextArea txtrKarteKnig = new JTextArea();
-		txtrKarteKnig.setEditable(false);
-		txtrKarteKnig.setText("Karte 1: K\u00F6nig\r\nKarte 2: 8\r\n\r\nSumme: 18");
-		txtrKarteKnig.setBounds(263, 167, 182, 131);
-		getContentPane().add(txtrKarteKnig);
-		
-		JLabel lblKartenbersichtBank = new JLabel("Karten\u00FCbersicht Bank:");
-		lblKartenbersichtBank.setBounds(260, 142, 106, 14);
-		getContentPane().add(lblKartenbersichtBank);
-		
-		JTextArea txtrGamestatusbar = new JTextArea();
-		txtrGamestatusbar.setEditable(false);
-		txtrGamestatusbar.setText("unentschieden");
-		txtrGamestatusbar.setBounds(263, 308, 182, 20);
-		getContentPane().add(txtrGamestatusbar);
 		
 		
 	}
