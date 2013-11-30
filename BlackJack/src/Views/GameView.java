@@ -34,6 +34,8 @@ import javax.swing.SwingConstants;
 import java.awt.Cursor;
 import javax.swing.JTable;
 import javax.swing.JTree;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GameView extends JFrame
 {
@@ -68,15 +70,19 @@ public class GameView extends JFrame
 		lblEinsatz.setBounds(26, 120, 59, 14);
 		getContentPane().add(lblEinsatz);
 		
-		JTextPane textPane_1 = new JTextPane();
-		textPane_1.setBounds(165, 114, 72, 20);
-		getContentPane().add(textPane_1);
+		JTextPane betInput = new JTextPane();
+		betInput.setBounds(165, 114, 72, 20);
+		getContentPane().add(betInput);
 		
 		JButton btnPlaceBet = new JButton("Place Bet");
+		btnPlaceBet.setActionCommand("placeBet");
+		btnPlaceBet.addActionListener(controller);
 		btnPlaceBet.setBounds(159, 171, 89, 23);
 		getContentPane().add(btnPlaceBet);
 		
 		JButton btnNewButton = new JButton("Leave table");
+		btnNewButton.setActionCommand("leaveTable");
+		btnNewButton.addActionListener(controller);
 		btnNewButton.setBounds(26, 218, 222, 23);
 		getContentPane().add(btnNewButton);
 		
@@ -112,5 +118,13 @@ public class GameView extends JFrame
 		getContentPane().add(btnHit);
 		
 		
+	}
+	
+	// methods--------------------------------------------------------------------
+	
+	public int getBet()
+	{
+		
+		return 1;
 	}
 }

@@ -3,64 +3,51 @@ package Models;
 public class CardModel
 {
 	// declaration------------------------------
-	
-	private String name, color;
-	private int value;
-	private boolean flag;
-	
+
+	private String	name;
+	private int		value, count;
+
 	// constructor------------------------------
-	
-	public CardModel(String inputName, int inputValue, boolean inputFlag, String inputColor)
+
+	public CardModel(String inputName, int inputValue)
 	{
 		name = inputName;
 		value = inputValue;
-		flag = inputFlag;
+		count = 0;
 	}
-	
+
 	// set-block--------------------------------
-	
+
 	public void setName(String newName)
 	{
 		name = newName;
 	}
-	
+
 	public void setValue(int newValue)
 	{
 		value = newValue;
 	}
-	
-	public void setFlag(boolean newFlag)
+
+	public void setCount(int newCount)
 	{
-		flag = newFlag;
+		count = newCount;
 	}
-	
-	public void setColor(String newColor)
-	{
-		color = newColor;
-	}
-	
+
 	// get-block--------------------------------
-	
+
 	public String getName()
 	{
 		return name;
 	}
-	
-	public String getColor()
-	{
-		return color;
-	}
-	
+
 	public int getValue()
 	{
 		return value;
 	}
-	
-	public boolean getFlag()
+
+	public int getCount()
 	{
-		return flag;
+		return count;
 	}
-	
-	
-	
+
 }

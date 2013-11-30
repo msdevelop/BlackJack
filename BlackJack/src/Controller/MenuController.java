@@ -8,31 +8,33 @@ import Views.MenuView;
 public class MenuController implements ActionListener
 {
 	// declaration---------------------------------------
-	
-	private MenuView menuView;
-	
+
+	private MenuView	menuView;
+
 	// constructor---------------------------------------
-	
+
 	public MenuController()
 	{
 		this.menuView = new MenuView(this);
 		this.menuView.setVisible(true);
 	}
-	
+
 	// methods-------------------------------------------
-	
+
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent e)
 	{
-	
-		if(e.getActionCommand().equals("Neues Spiel"))
+
+		if (e.getActionCommand().equals("startNewGame"))
 		{
 			new GameController();
 			this.menuView.dispose();
-			
-		}else if(e.getActionCommand().equals("Exit"))
-		{
-			System.exit(0);
+
 		}
+		else
+			if (e.getActionCommand().equals("exitMenu"))
+			{
+				System.exit(0);
+			}
 	}
 }

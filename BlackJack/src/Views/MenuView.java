@@ -34,16 +34,18 @@ public class MenuView extends JFrame implements Observer
 		lblMen.setBounds(10, 11, 47, 36);
 		getContentPane().add(lblMen);
 		
-		JButton NeuesSpielButton = new JButton("Neues Spiel");
-		NeuesSpielButton.addActionListener(controller);
-		NeuesSpielButton.setBounds(10, 60, 110, 23);
-		getContentPane().add(NeuesSpielButton);
+		JButton btnNewGame = new JButton("Neues Spiel");
+		btnNewGame.setActionCommand("startNewGame");
+		btnNewGame.addActionListener(controller);
+		btnNewGame.setBounds(10, 60, 110, 23);
+		getContentPane().add(btnNewGame);
 		
-		JButton ExitButton = new JButton("Exit");
-		ExitButton.addActionListener(controller);
+		JButton btnExitGame = new JButton("Exit");
+		btnExitGame.setActionCommand("exitMenu");
+		btnExitGame.addActionListener(controller);
 		
-		ExitButton.setBounds(10, 104, 110, 23);
-		getContentPane().add(ExitButton);
+		btnExitGame.setBounds(10, 104, 110, 23);
+		getContentPane().add(btnExitGame);
 		
 	}
 	
