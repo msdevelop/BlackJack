@@ -54,7 +54,7 @@ import java.awt.event.ActionEvent;
 public class GameView extends JFrame
 {
 	private JTextField	betInput;
-	private JTextArea statusBar, betStatus;
+	private JTextArea statusBar, betStatus, playerOut, dealerOut;
 	private JButton btnLeaveTable, btnPlaceBet, btnStay, btnHit;
 
 	// constructor----------------------------------------------------------------------------------
@@ -94,12 +94,6 @@ public class GameView extends JFrame
 		btnLeaveTable.addActionListener(controller);
 		getContentPane().add(btnLeaveTable);
 
-		JTextPane dealerCardStatus = new JTextPane();
-		dealerCardStatus.setEditable(false);
-		dealerCardStatus.setBounds(324, 47, 351, 100);
-		dealerCardStatus.setText("Karte 1: Herz Ass\r\nKarte 2: Karo 9");
-		getContentPane().add(dealerCardStatus);
-
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(258, 171, 481, 14);
 		getContentPane().add(separator_1);
@@ -107,12 +101,6 @@ public class GameView extends JFrame
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(258, 265, 481, 14);
 		getContentPane().add(separator_2);
-
-		JTextPane playerCardStatus = new JTextPane();
-		playerCardStatus.setEditable(false);
-		playerCardStatus.setBounds(324, 310, 351, 100);
-		playerCardStatus.setText("Karte 1: Pik K\u00F6nig\r\nKarte 2: Kreuz 2");
-		getContentPane().add(playerCardStatus);
 
 		btnStay = new JButton("Stay");
 		btnStay.setBounds(487, 421, 89, 23);
@@ -139,7 +127,7 @@ public class GameView extends JFrame
 		getContentPane().add(lblSpielstatus);
 		
 		JLabel lblDealer = new JLabel("Dealer:");
-		lblDealer.setBounds(324, 16, 59, 14);
+		lblDealer.setBounds(324, 22, 59, 14);
 		getContentPane().add(lblDealer);
 		
 		JLabel lblPlayer = new JLabel("Player:");
@@ -181,19 +169,41 @@ public class GameView extends JFrame
 		cardSumDealer.setEditable(false);
 		cardSumDealer.setBounds(165, 377, 72, 25);
 		getContentPane().add(cardSumDealer);
+		
+		playerOut = new JTextArea();
+		playerOut.setEditable(false);
+		playerOut.setBounds(324, 310, 351, 100);
+		getContentPane().add(playerOut);
+		
+		dealerOut = new JTextArea();
+		dealerOut.setEditable(false);
+		dealerOut.setBounds(324, 52, 351, 100);
+		getContentPane().add(dealerOut);
 
 	}
 
 	// methods--------------------------------------------------------------------
 
-	public int getBet()									// returns betInput
+	// prints player cards
+	public void setPlayerOut(String playerOutInput)
+	{
+		playerOut.setText(playerOutInput);
+	}
+	
+	// prints dealer cards
+	public void setDealerOut(String dealerOutInput)
+	{
+		dealerOut.setText(dealerOutInput);
+	}
+	
+	// returns betInput
+	public int getBet()									
 	{
 		return Integer.parseInt(betInput.getText());
 	}
 	
-	//-----------------------------------------------------------------------------
-
-	public boolean verifyBet()							// verifys if input in betInput is a valid int
+	// verifys if input in betInput is a valid int
+	public boolean verifyBet()
 	{
 		try
 		{
@@ -210,34 +220,28 @@ public class GameView extends JFrame
 
 	}
 	
-	//-----------------------------------------------------------------------------
-	
-	public void setTextStatusBar(String statusText)		// sets text with .setText()
+	// overwrites text in statusBar with new text
+	public void setTextStatusBar(String statusText)
 	{
 		statusBar.setText(statusText);
 	}
 	
-	//-----------------------------------------------------------------------------
-	
+	// disables btnSetBet
 	public void disableBtnSetBet()
 	{
 		btnPlaceBet.setEnabled(false);
 	}
 	
-	//-----------------------------------------------------------------------------
-	
-	public void activateHitStay()						// enables hit and stay btn
+	// enables hit and stay btn
+	public void activateHitStay()
 	{
 		btnStay.setEnabled(true);
 		btnHit.setEnabled(true);
 	}
 	
-	//-----------------------------------------------------------------------------
-	
+	// prints betStatus
 	public void setBetStatus(String betStatusInput)
 	{
 		betStatus.setText(betStatusInput);
 	}
-	
-	
 }

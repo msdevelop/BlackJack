@@ -2,6 +2,7 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import Models.CardModel;
 import Views.GameView;
@@ -39,67 +40,110 @@ public class GameController implements ActionListener
 			}
 	}
 
-	// ----------------------------------------------
-
-	public void leaveTableToMenu() // leave current table and return to menu
+	// leave current table and return to menu
+	public void leaveTableToMenu()
 	{
-		this.gameView.dispose(); // close gameView
-		new MenuController(); // open new menuView
+		this.gameView.dispose();
+		new MenuController();
 	}
 
-	// ----------------------------------------------
-
+	// cardStack is initialized; bets are placed
 	public void initializeGame()
 	{
-		this.initializeCardStack();
-		this.getBetInput();
-		this.playGame();
+		if(this.getBetInput())
+			this.playGame();
 	}
 
-	// ----------------------------------------------
-
+	// game starts after bets are placed
 	public void playGame()
 	{
+		this.initializeCardStack();
 		this.generateStartCards();
+		this.printCards();
 	}
-	
-	public void generateStartCards() // TODO verify if chosen card has counter < 6; else generate new randomPos
+
+	// prints both player and dealer cards
+	public void printCards()
 	{
-		playerCount = 0;
-		dealerCount = 0;
-		
-		for(int i = 0; i < 2; i++)
+		this.printPlayerCards();
+		this.printDealerCards();
+	}
+
+	// prints player cards
+	public void printPlayerCards()
+	{
+		String playerCardsOutput = "";
+
+		for (int i = 0; i < playerCount; i++)
+		{
+			playerCardsOutput = playerCardsOutput + (playerStack[i].getName()) + "\n";
+		}
+
+		gameView.setPlayerOut(playerCardsOutput);
+	}
+
+	// prints dealer cards
+	public void printDealerCards()
+	{
+		String dealerCardsOutput = "";
+
+		for (int i = 0; i < dealerCount; i++)
+		{
+			dealerCardsOutput = dealerCardsOutput + (dealerStack[i].getName()) + "\n";
+		}
+
+		gameView.setDealerOut(dealerCardsOutput);
+	}
+
+	// generates random cards at gamestart
+	public void generateStartCards()
+	{
+		for (int i = 0; i < 2; i++)
 		{
 			int randomPos = generateRandomNumber();
+
+			while (beginCardStack[randomPos].getCount() >= 5)
+			{
+				randomPos = generateRandomNumber();
+			}
+
 			playerStack[playerCount] = beginCardStack[randomPos];
 			playerCount++;
 		}
-		
+
 		int randomPos = generateRandomNumber();
+
+		while (beginCardStack[randomPos].getCount() >= 5)
+		{
+			randomPos = generateRandomNumber();
+		}
+
 		dealerStack[dealerCount] = beginCardStack[randomPos];
-		
+		dealerCount++;
 	}
-	
+
+	// generates random number for card selction
 	public int generateRandomNumber()
 	{
-		return 1;
+		Random generator = new Random();
+		int randomNmbr = generator.nextInt(51);
+		return randomNmbr;
 	}
 
-	// ----------------------------------------------
-
-	public void disableBet() // disables the button btnSetBet
+	// disables the button btnSetBet
+	public void disableBet()
 	{
 		gameView.disableBtnSetBet();
 	}
 
-	public void activateGameBtns() // activates hit and stay btn
+	// activates hit and stay btn
+	public void activateGameBtns()
 	{
 		gameView.activateHitStay();
 	}
 
-	// ----------------------------------------------
-
-	public void getBetInput() // gets the bet placed by the player
+	// gets the bet placed by the player
+	public boolean getBetInput()
 	{
 		if (gameView.verifyBet())
 		{
@@ -108,14 +152,18 @@ public class GameController implements ActionListener
 			gameView.setBetStatus(Integer.toString(playerBet));
 			this.disableBet();
 			this.activateGameBtns();
+			
+			return true;
 		}
 		else
+		{
 			gameView.setTextStatusBar("Ungültiger Wetteinsatz!");
+			return false;
+		}
 	}
 
-	// ----------------------------------------------
-
-	public void initializeCardStack() // initialize beginCardStack with 52 cards
+	// initialize beginCardStack with 52 cards
+	public void initializeCardStack()
 	{
 		String color = "";
 		int index = 0;
@@ -140,9 +188,7 @@ public class GameController implements ActionListener
 
 			for (int iNumber = 2; iNumber < 11; iNumber++)
 			{
-				beginCardStack[index] = new CardModel(color + " " + iNumber,
-						iNumber);
-
+				beginCardStack[index] = new CardModel(color + " " + iNumber, iNumber);
 				index++;
 			}
 
