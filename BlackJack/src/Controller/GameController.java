@@ -14,7 +14,7 @@ public class GameController implements ActionListener
 	// declaration--------------------------------
 
 	private GameView	gameView;
-	private CardModel[]	beginCardStack	= new CardModel[52], playerStack = new CardModel[10], dealerStack = new CardModel[10];
+	private CardModel[]	beginCardStack	= new CardModel[52], playerStack = new CardModel[6], dealerStack = new CardModel[6];
 	private int			playerBet, playerCount, dealerCount;
 
 	// constructor--------------------------------
@@ -27,6 +27,7 @@ public class GameController implements ActionListener
 
 	// methods-----------------------------------
 
+	// button actions
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getActionCommand().equals("placeBet"))
@@ -34,10 +35,38 @@ public class GameController implements ActionListener
 			this.initializeGame();
 		}
 		else
-			if (e.getActionCommand().equals("leaveTable"))
+			if (e.getActionCommand().equals("hit"))
 			{
-				this.leaveTableToMenu();
+				this.hit();
 			}
+			else
+				if (e.getActionCommand().equals("stay"))
+				{
+					this.stay();
+				}
+				else
+					if (e.getActionCommand().equals("leaveTable"))
+					{
+						this.leaveTableToMenu();
+					}
+	}
+	
+	// player continues game with new card
+	public void hit()
+	{
+		this.generateNewPlayerCard();
+		gameView.setTextStatusBar("Sie erhalten eine weitere Karte.");
+		gameView.updateUI();
+		this.bitteWarten(2000);
+		this.printPlayerCards();
+		this.updatePlayerCardSum();
+		gameView.setTextStatusBar("Möchten Sie noch eine Karte?");
+	}
+	
+	// player passes turn to computer
+	public void stay()
+	{
+		
 	}
 
 	// leave current table and return to menu
@@ -47,28 +76,71 @@ public class GameController implements ActionListener
 		new MenuController();
 	}
 
-	// cardStack is initialized; bets are placed
+	// cardStack is initialized; bet is placed
 	public void initializeGame()
 	{
 		if(this.getBetInput())
 			this.playGame();
 	}
 
-	// game starts after bets are placed
+	// game starts after bet is placed
 	public void playGame()
 	{
+		gameView.setTextStatusBar("Einsatz: " + playerBet + "€");
 		this.initializeCardStack();
 		this.generateStartCards();
-		this.printCards();
-	}
-
-	// prints both player and dealer cards
-	public void printCards()
-	{
-		this.printPlayerCards();
+		gameView.appendTextStatusBar("Karten werden ausgeteilt.");
+		gameView.updateUI();
+		this.bitteWarten(2000);
 		this.printDealerCards();
+		this.updateDealerCardSum();
+		gameView.updateUI();
+		this.bitteWarten(2000);
+		this.printPlayerCards();
+		this.updatePlayerCardSum();
+		gameView.setTextStatusBar("Möchten Sie eine weitere Karte?");
 	}
-
+	
+	public void bitteWarten(int i)
+	{
+		try
+		{
+			Thread.sleep(i);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	// calculates the sum of all card values in the dealerStack
+	public void updateDealerCardSum()
+	{
+		int cardSumDealer = 0;
+		
+		for (int i = 0; i < dealerCount; i++)
+		{
+			cardSumDealer = cardSumDealer + dealerStack[i].getValue();
+		}
+		
+		String cardSumDealerOut = Integer.toString(cardSumDealer);
+		gameView.setCardSumDealer(cardSumDealerOut);
+	}
+	
+	// calculates the sum of all card values in the playerStack
+	public void updatePlayerCardSum()
+	{
+		int cardSumPlayer = 0;
+		
+		for (int i = 0; i < playerCount; i++)
+		{
+			cardSumPlayer = cardSumPlayer + playerStack[i].getValue();
+		}
+		
+		String cardSumPlayerOut = Integer.toString(cardSumPlayer);
+		gameView.setCardSumPlayer(cardSumPlayerOut);
+	}
+	
 	// prints player cards
 	public void printPlayerCards()
 	{
@@ -76,7 +148,7 @@ public class GameController implements ActionListener
 
 		for (int i = 0; i < playerCount; i++)
 		{
-			playerCardsOutput = playerCardsOutput + (playerStack[i].getName()) + "\n";
+			playerCardsOutput = playerCardsOutput + "Karte " + (i + 1) + ": " + (playerStack[i].getName()) + "\n";
 		}
 
 		gameView.setPlayerOut(playerCardsOutput);
@@ -89,7 +161,7 @@ public class GameController implements ActionListener
 
 		for (int i = 0; i < dealerCount; i++)
 		{
-			dealerCardsOutput = dealerCardsOutput + (dealerStack[i].getName()) + "\n";
+			dealerCardsOutput = dealerCardsOutput + "Karte " + (i + 1) + ": " + (dealerStack[i].getName()) + "\n";
 		}
 
 		gameView.setDealerOut(dealerCardsOutput);
@@ -122,6 +194,23 @@ public class GameController implements ActionListener
 		dealerCount++;
 	}
 
+	// generates new card in the playerStack
+	public void generateNewPlayerCard()
+	{
+		for (int i = 0; i < 1; i++)
+		{
+			int randomPos = generateRandomNumber();
+
+			while (beginCardStack[randomPos].getCount() >= 5)
+			{
+				randomPos = generateRandomNumber();
+			}
+
+			playerStack[playerCount] = beginCardStack[randomPos];
+			playerCount++;
+		}	
+	}
+	
 	// generates random number for card selction
 	public int generateRandomNumber()
 	{
@@ -148,7 +237,6 @@ public class GameController implements ActionListener
 		if (gameView.verifyBet())
 		{
 			playerBet = gameView.getBet();
-			gameView.setTextStatusBar("Einsatz: " + playerBet);
 			gameView.setBetStatus(Integer.toString(playerBet));
 			this.disableBet();
 			this.activateGameBtns();
