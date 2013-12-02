@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
+import java.awt.Point;
 
 public class MenuView extends JFrame implements Observer
 {
@@ -24,6 +25,7 @@ public class MenuView extends JFrame implements Observer
 	
 	public MenuView(MenuController controller)
 	{
+		setLocation(new Point(100, 100));
 		setMinimumSize(new Dimension(150, 215));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Menu Black Jack");

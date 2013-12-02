@@ -55,9 +55,8 @@ import javax.swing.JScrollBar;
 public class GameView extends JFrame
 {
 	private JTextField	betInput;
-	private JTextArea	statusBar, betStatus, playerOut, dealerOut,
-			cardSumDealer, cardSumPlayer;
-	private JButton		btnLeaveTable, btnPlaceBet, btnStay, btnHit;
+	private JTextArea	statusBar, betStatus, playerOut, dealerOut, cardSumDealer, cardSumPlayer;
+	private JButton		btnLeaveTable, btnPlaceBet, btnStay, btnHit, btnPlayAgain;
 
 	// constructor----------------------------------------------------------------------------------
 
@@ -186,6 +185,13 @@ public class GameView extends JFrame
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(0, 265, 266, 2);
 		getContentPane().add(separator_3);
+		
+		btnPlayAgain = new JButton("Play again");
+		btnPlayAgain.setEnabled(false);
+		btnPlayAgain.setActionCommand("playAgain");
+		btnPlayAgain.addActionListener(controller);
+		btnPlayAgain.setBounds(9, 443, 239, 23);
+		getContentPane().add(btnPlayAgain);
 	}
 
 	// methods--------------------------------------------------------------------
@@ -250,6 +256,19 @@ public class GameView extends JFrame
 		btnPlaceBet.setEnabled(false);
 	}
 
+	// disables btnHit and Stay
+	public void disableHitStay()
+	{
+		btnHit.setEnabled(false);
+		btnStay.setEnabled(false);
+	}
+	
+	// enables btnPlayAgain
+	public void enablePlayAgain()
+	{
+		btnPlayAgain.setEnabled(true);
+	}
+	
 	// enables hit and stay btn
 	public void activateHitStay()
 	{
@@ -273,5 +292,17 @@ public class GameView extends JFrame
 	public void setCardSumDealer(String sumInput)
 	{
 		cardSumDealer.setText(sumInput);
+	}
+	
+	// returns card sum of player
+	public String getCardSumPlayer()
+	{
+		return cardSumPlayer.getText();
+	}
+
+	// returns card sum of dealer
+	public String getCardSumDealer()
+	{
+		return cardSumDealer.getText();
 	}
 }

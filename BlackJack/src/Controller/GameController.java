@@ -45,10 +45,15 @@ public class GameController implements ActionListener
 					this.stay();
 				}
 				else
-					if (e.getActionCommand().equals("leaveTable"))
+					if(e.getActionCommand().equals("playAgain"))
 					{
-						this.leaveTableToMenu();
+						this.playAgain();
 					}
+					else
+						if (e.getActionCommand().equals("leaveTable"))
+						{
+							this.leaveTableToMenu();
+						}
 	}
 	
 	// player continues game with new card
@@ -60,7 +65,85 @@ public class GameController implements ActionListener
 		this.bitteWarten(2000);
 		this.printPlayerCards();
 		this.updatePlayerCardSum();
-		gameView.setTextStatusBar("Möchten Sie noch eine Karte?");
+		
+		if(checkPlayerCardSum() == 1)
+			gameView.setTextStatusBar("Möchten Sie noch eine Karte?");
+		else
+			if(checkPlayerCardSum() == 2)
+				this.playerLose();
+			else
+				{
+					gameView.setTextStatusBar("Sie können keine weitere Karte ziehen. Dealer ist am Zug.");
+					this.passTurn();
+				}
+	}
+
+	// ends game after player loses
+	public void playerLose()
+	{
+		gameView.disableHitStay();
+		gameView.enablePlayAgain();
+		gameView.setTextStatusBar("Sie haben leider verloren. Ihr Wetteinsatz wird eingezogen.");
+	}
+	
+	// generates new game session
+	public void playAgain()
+	{
+		new GameController();
+		this.gameView.dispose();
+	}
+	
+	// passes turn to computer
+	public void passTurn()
+	{
+		gameView.disableHitStay();
+	}
+	
+	// verifies if player is above 21 or equal to it or below
+	public int checkPlayerCardSum()
+	{
+		int playerCardSum = Integer.parseInt(gameView.getCardSumPlayer());
+		
+		if(playerCardSum == 21)
+		{
+			return 3;
+		}
+		else
+			if(playerCardSum > 21)
+			{
+				return 2;
+			}
+			else
+				return 1;
+		
+	}
+	
+	// downgrades one ace at a time
+	public boolean downGradeAce()
+	{
+		int point = 0;
+		
+		while(point == 0)
+		{
+			for(int i = 0; i < playerCount; i++)
+			{
+				if(playerStack[i].getValue() == 11)
+				{
+					playerStack[i].setValue(1);
+					point = 1;
+				}
+			}
+			if(point == 0)
+				point = 2;
+		}
+		
+		if(point == 1)
+		{
+			this.updatePlayerCardSum();
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	// player passes turn to computer
@@ -98,7 +181,17 @@ public class GameController implements ActionListener
 		this.bitteWarten(2000);
 		this.printPlayerCards();
 		this.updatePlayerCardSum();
-		gameView.setTextStatusBar("Möchten Sie eine weitere Karte?");
+		if(checkPlayerCardSum() == 1)
+			gameView.setTextStatusBar("Möchten Sie noch eine Karte?");
+		else
+			if(checkPlayerCardSum() == 2)
+				this.playerLose();
+			else
+				{
+					gameView.setTextStatusBar("Sie können keine weitere Karte ziehen. Dealer ist am Zug.");
+					this.passTurn();
+				}
+				
 	}
 	
 	public void bitteWarten(int i)
@@ -137,6 +230,19 @@ public class GameController implements ActionListener
 			cardSumPlayer = cardSumPlayer + playerStack[i].getValue();
 		}
 		
+		outerloop:
+		while(cardSumPlayer > 21)
+		{
+			if(this.downGradeAce())
+			{
+				cardSumPlayer = (cardSumPlayer - 10);
+			}
+			else
+			{
+				break outerloop;
+			}
+		}
+		
 		String cardSumPlayerOut = Integer.toString(cardSumPlayer);
 		gameView.setCardSumPlayer(cardSumPlayerOut);
 	}
@@ -145,12 +251,34 @@ public class GameController implements ActionListener
 	public void printPlayerCards()
 	{
 		String playerCardsOutput = "";
-
-		for (int i = 0; i < playerCount; i++)
+		if(playerCount <= 6)
 		{
-			playerCardsOutput = playerCardsOutput + "Karte " + (i + 1) + ": " + (playerStack[i].getName()) + "\n";
+			for (int i = 0; i < playerCount; i++)
+			{
+				playerCardsOutput = playerCardsOutput + "Karte " + (i + 1) + ": " + (playerStack[i].getName()) + "\n";
+			}
 		}
-
+		else
+		{
+			for (int i = 0; i < playerCount; i++)
+			{
+				innerloop:
+				for(int k = 0; k < 2; k++)
+				{
+					try
+					{	
+						playerCardsOutput = playerCardsOutput + "Karte " + (i + 1) + ": " + (playerStack[i].getName()) + "\t";
+						i++;
+					}
+					catch(NullPointerException n)
+					{
+						break innerloop;
+					}
+				}
+				i--;
+				playerCardsOutput = playerCardsOutput + "\n";
+			}
+		}
 		gameView.setPlayerOut(playerCardsOutput);
 	}
 
@@ -158,12 +286,34 @@ public class GameController implements ActionListener
 	public void printDealerCards()
 	{
 		String dealerCardsOutput = "";
-
-		for (int i = 0; i < dealerCount; i++)
+		if(dealerCount <= 6)
 		{
-			dealerCardsOutput = dealerCardsOutput + "Karte " + (i + 1) + ": " + (dealerStack[i].getName()) + "\n";
+			for (int i = 0; i < dealerCount; i++)
+			{
+				dealerCardsOutput = dealerCardsOutput + "Karte " + (i + 1) + ": " + (dealerStack[i].getName()) + "\n";
+			}
 		}
-
+		else
+		{
+			for (int i = 0; i < dealerCount; i++)
+			{
+				innerloop:
+				for(int k = 0; k < 2; k++)
+				{
+					try
+					{	
+						dealerCardsOutput = dealerCardsOutput + "Karte " + (i + 1) + ": " + (dealerStack[i].getName()) + "\t";
+						i++;
+					}
+					catch(NullPointerException n)
+					{
+						break innerloop;
+					}
+				}
+				i--;
+				dealerCardsOutput = dealerCardsOutput + "\n";
+			}
+		}
 		gameView.setDealerOut(dealerCardsOutput);
 	}
 
