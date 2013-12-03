@@ -209,11 +209,6 @@ public class GameController implements ActionListener
 		{
 			int randomPos = generateRandomNumber();
 
-			while (beginCardStack[randomPos].getCount() >= 5)
-			{
-				randomPos = generateRandomNumber();
-			}
-
 			playerStack[playerCount] = beginCardStack[randomPos];
 			playerCount++;
 		}	
@@ -538,7 +533,7 @@ public class GameController implements ActionListener
 		{
 			playerBet = gameView.getBet();
 			gameView.setBetStatus(Integer.toString(playerBet));
-			this.disableBet();
+			gameView.disableBtnSetBet();
 			this.activateGameBtns();
 			
 			return true;
@@ -559,10 +554,10 @@ public class GameController implements ActionListener
 	}
 
 	// disables btnSetBet
-	public void disableBet()
-	{
-		gameView.disableBtnSetBet();
-	}
+//	public void disableBet()
+//	{
+//		gameView.disableBtnSetBet();
+//	}
 
 	// activates hit and stay btn
 	public void activateGameBtns()
