@@ -7,15 +7,10 @@ import javax.swing.JFrame;
 
 import Controller.MenuController;
 
-import java.awt.Color;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Point;
 

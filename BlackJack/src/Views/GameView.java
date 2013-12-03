@@ -10,47 +10,9 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-import javax.swing.JSlider;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JOptionPane;
-import javax.swing.JSplitPane;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.JDesktopPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JLayeredPane;
-import javax.swing.JInternalFrame;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-
-import java.awt.TextArea;
-import java.awt.Canvas;
-
-import javax.swing.JMenuBar;
-
-import java.awt.Color;
-
-import javax.swing.JMenuItem;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-
-import java.awt.Cursor;
-
-import javax.swing.JTable;
-import javax.swing.JTree;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollBar;
 
 public class GameView extends JFrame
 {

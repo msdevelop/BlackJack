@@ -6,7 +6,6 @@ import java.util.Random;
 
 import Models.CardModel;
 import Views.GameView;
-import Views.MenuView;
 
 public class GameController implements ActionListener
 {
@@ -295,7 +294,7 @@ public class GameController implements ActionListener
 	public void printPlayerCards()
 	{
 		String playerCardsOutput = "";
-		if(playerCount <= 2)
+		if(playerCount <= 6)
 		{
 			for (int i = 0; i < playerCount; i++)
 			{
@@ -422,6 +421,7 @@ public class GameController implements ActionListener
 	{
 		int point = 0;
 		
+		outerloop:
 		while(point == 0)
 		{
 			for(int i = 0; i < playerCount; i++)
@@ -432,8 +432,7 @@ public class GameController implements ActionListener
 					point = 1;
 				}
 			}
-			if(point == 0)
-				point = 2;
+			break outerloop;
 		}
 		
 		if(point == 1)
@@ -450,6 +449,7 @@ public class GameController implements ActionListener
 	{
 		int point = 0;
 			
+			outerloop:
 			while(point == 0)
 			{
 				for(int i = 0; i < dealerCount; i++)
@@ -460,8 +460,7 @@ public class GameController implements ActionListener
 						point = 1;
 					}
 				}
-				if(point == 0)
-					point = 2;
+				break outerloop;
 			}
 			
 			if(point == 1)
@@ -559,8 +558,6 @@ public class GameController implements ActionListener
 		return randomNmbr;
 	}
 
-	// disables the button btnSetBet
-	
 	// disables btnSetBet
 	public void disableBet()
 	{
