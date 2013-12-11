@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 public class GameView extends JFrame
 {
 	private JTextField	betInput;
-	private JTextArea	statusBar, betStatus, playerOut, dealerOut, cardSumDealer, cardSumPlayer;
+	private JTextArea	statusBar, betStatus, playerOut, dealerOut, cardSumDealer, cardSumPlayer, chipcountStatus;
 	private JButton		btnLeaveTable, btnPlaceBet, btnStay, btnHit, btnPlayAgain;
 
 	// constructor----------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ public class GameView extends JFrame
 		textArea.setBounds(233, 329, -80, 67);
 		getContentPane().add(textArea);
 
-		JTextArea chipcountStatus = new JTextArea();
+		chipcountStatus = new JTextArea();
 		chipcountStatus.setEditable(false);
 		chipcountStatus.setBounds(176, 47, 72, 25);
 		getContentPane().add(chipcountStatus);
@@ -217,7 +217,25 @@ public class GameView extends JFrame
 	{
 		btnPlaceBet.setEnabled(false);
 	}
+	
+	// enables btnSetBet
+	public void enableBtnSetBet()
+	{
+		btnPlaceBet.setEnabled(true);
+	}	
 
+	// disables textfield betInpu
+	public void disableBetInput()
+	{
+		betInput.setEnabled(false);
+	}
+	
+	// enables textfield betInpu
+	public void enableBetInput()
+	{
+		betInput.setEnabled(true);
+	}
+	
 	// disables btnHit and Stay
 	public void disableHitStay()
 	{
@@ -225,17 +243,23 @@ public class GameView extends JFrame
 		btnStay.setEnabled(false);
 	}
 	
+	// enables hit and stay btn
+	public void enableHitStay()
+	{
+		btnStay.setEnabled(true);
+		btnHit.setEnabled(true);
+	}
+	
 	// enables btnPlayAgain
 	public void enablePlayAgain()
 	{
 		btnPlayAgain.setEnabled(true);
 	}
-	
-	// enables hit and stay btn
-	public void activateHitStay()
+
+	// disables btnPlayAgain
+	public void disablePlayAgain()
 	{
-		btnStay.setEnabled(true);
-		btnHit.setEnabled(true);
+		btnPlayAgain.setEnabled(false);
 	}
 
 	// prints betStatus
@@ -267,4 +291,23 @@ public class GameView extends JFrame
 	{
 		return cardSumDealer.getText();
 	}
+	
+	// resets gameView textFields to default
+	public void clearTextFields()
+	{
+		betInput.setText("");
+		cardSumPlayer.setText("");
+		cardSumDealer.setText("");
+		dealerOut.setText("");
+		playerOut.setText("");
+		statusBar.setText("Bitte tätigen Sie ihren Wetteinsatz.");
+		betStatus.setText("");
+	}
+
+	public void updateChipcount(int chipC)
+	{
+		String chipCount = Integer.toString(chipC);
+		chipcountStatus.setText(chipCount);
+	}
+
 }

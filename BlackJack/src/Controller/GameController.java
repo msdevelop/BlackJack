@@ -14,7 +14,7 @@ public class GameController implements ActionListener
 
 	private GameView	gameView;
 	private CardModel[]	beginCardStack	= new CardModel[52], playerStack = new CardModel[6], dealerStack = new CardModel[6];
-	private int			playerBet, playerCount, dealerCount;
+	private int			chipCount = 100, playerBet, playerCount = 0, dealerCount = 0;
 
 	// constructor--------------------------------
 
@@ -22,6 +22,8 @@ public class GameController implements ActionListener
 	{
 		this.gameView = new GameView(this);
 		this.gameView.setVisible(true);
+		this.gameView.setTextStatusBar("Bitte tätigen Sie ihren Wetteinsatz!");
+		this.gameView.updateChipcount(chipCount);
 	}
 
 	// methods-----------------------------------
@@ -46,7 +48,7 @@ public class GameController implements ActionListener
 				else
 					if(e.getActionCommand().equals("playAgain"))
 					{
-						this.playAgain();
+						this.resetTable();
 					}
 					else
 						if (e.getActionCommand().equals("leaveTable"))
@@ -77,6 +79,7 @@ public class GameController implements ActionListener
 		this.waitTimer(2000);
 		this.printPlayerCards();
 		this.updatePlayerCardSum();
+		gameView.enableHitStay();
 		this.continueGamePlayer();
 	}
 	
@@ -126,12 +129,21 @@ public class GameController implements ActionListener
 		gameView.setTextStatusBar("Sie können keine weitere Karte ziehen. Dealer ist am Zug.");
 		this.dealerTurn();
 	}
-	
-	// generates new game session
-	public void playAgain()
+
+	// resets all variables to default and clears gameView
+	public void resetTable()
 	{
-		new GameController();
-		this.gameView.dispose();
+		playerBet = 0;
+		playerCount = 0;
+		dealerCount = 0;
+		beginCardStack	= new CardModel[52];
+		playerStack = new CardModel[6];
+		dealerStack = new CardModel[6];
+		gameView.enableBtnSetBet();
+		gameView.enableBetInput();
+		gameView.disablePlayAgain();
+		gameView.clearTextFields();
+		
 	}
 	
 	// initialize beginCardStack with 52 cards
@@ -139,7 +151,6 @@ public class GameController implements ActionListener
 	{
 		String color = "";
 		int index = 0;
-
 		for (int iColor = 0; iColor < 4; iColor++)
 		{
 			switch (iColor)
@@ -157,13 +168,11 @@ public class GameController implements ActionListener
 					color = "Karo";
 					break;
 			}
-
 			for (int iNumber = 2; iNumber < 11; iNumber++)
 			{
 				beginCardStack[index] = new CardModel(color + " " + iNumber, iNumber);
 				index++;
 			}
-
 			beginCardStack[index] = new CardModel(color + " Ass", 11);
 			index++;
 			beginCardStack[index] = new CardModel(color + " König", 10);
@@ -181,23 +190,12 @@ public class GameController implements ActionListener
 		for (int i = 0; i < 2; i++)
 		{
 			int randomPos = generateRandomNumber();
-
-			while (beginCardStack[randomPos].getCount() >= 5)
-			{
-				randomPos = generateRandomNumber();
-			}
-
+			beginCardStack[randomPos].setCount((beginCardStack[randomPos].getCount()) + 1);
 			playerStack[playerCount] = beginCardStack[randomPos];
 			playerCount++;
 		}
-
 		int randomPos = generateRandomNumber();
-
-		while (beginCardStack[randomPos].getCount() >= 5)
-		{
-			randomPos = generateRandomNumber();
-		}
-
+		beginCardStack[randomPos].setCount((beginCardStack[randomPos].getCount()) + 1);
 		dealerStack[dealerCount] = beginCardStack[randomPos];
 		dealerCount++;
 	}
@@ -208,7 +206,11 @@ public class GameController implements ActionListener
 		for (int i = 0; i < 1; i++)
 		{
 			int randomPos = generateRandomNumber();
-
+			while (beginCardStack[randomPos].getCount() >= 5)
+			{
+				randomPos = generateRandomNumber();
+			}
+			beginCardStack[randomPos].setCount((beginCardStack[randomPos].getCount()) + 1);
 			playerStack[playerCount] = beginCardStack[randomPos];
 			playerCount++;
 		}	
@@ -220,12 +222,11 @@ public class GameController implements ActionListener
 		for (int i = 0; i < 1; i++)
 		{
 			int randomPos = generateRandomNumber();
-
 			while (beginCardStack[randomPos].getCount() >= 5)
 			{
 				randomPos = generateRandomNumber();
 			}
-
+			beginCardStack[randomPos].setCount((beginCardStack[randomPos].getCount()) + 1);
 			dealerStack[dealerCount] = beginCardStack[randomPos];
 			dealerCount++;
 		}	
@@ -480,6 +481,8 @@ public class GameController implements ActionListener
 	{
 		gameView.enablePlayAgain();
 		gameView.setTextStatusBar("Sie haben gewonnen.");
+		chipCount += (playerBet*2);
+		gameView.updateChipcount(chipCount);
 	}
 	
 	// ends game after draw
@@ -523,18 +526,19 @@ public class GameController implements ActionListener
 				}
 				else
 					this.calculateWinner();
-		
 	}
 
 	// gets the bet placed by the player
 	public boolean getBetInput()
 	{
-		if (gameView.verifyBet())
+		if (gameView.verifyBet() && (gameView.getBet()) <= chipCount )
 		{
 			playerBet = gameView.getBet();
+			chipCount -= playerBet;
+			gameView.updateChipcount(chipCount);
 			gameView.setBetStatus(Integer.toString(playerBet));
 			gameView.disableBtnSetBet();
-			this.activateGameBtns();
+			gameView.disableBetInput();
 			
 			return true;
 		}
@@ -551,18 +555,6 @@ public class GameController implements ActionListener
 		Random generator = new Random();
 		int randomNmbr = generator.nextInt(51);
 		return randomNmbr;
-	}
-
-	// disables btnSetBet
-//	public void disableBet()
-//	{
-//		gameView.disableBtnSetBet();
-//	}
-
-	// activates hit and stay btn
-	public void activateGameBtns()
-	{
-		gameView.activateHitStay();
 	}
 
 	// wait method for simulation purpose
