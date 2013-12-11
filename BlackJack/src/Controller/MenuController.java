@@ -21,13 +21,12 @@ public class MenuController implements ActionListener
 
 	// methods-------------------------------------------
 
-	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 
 		if (e.getActionCommand().equals("startNewGame"))
 		{
-			new GameController();
+			new LoginController();
 			this.menuView.dispose();
 
 		}

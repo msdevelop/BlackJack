@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 
 public class GameView extends JFrame
 {
+	// declaration--------------------------------
+	
 	private JTextField	betInput;
 	private JTextArea	statusBar, betStatus, playerOut, dealerOut, cardSumDealer, cardSumPlayer, chipcountStatus;
 	private JButton		btnLeaveTable, btnPlaceBet, btnStay, btnHit, btnPlayAgain;

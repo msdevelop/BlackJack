@@ -1,8 +1,5 @@
 package Views;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.JFrame;
 
 import Controller.MenuController;
@@ -14,9 +11,9 @@ import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.Point;
 
-public class MenuView extends JFrame implements Observer
+public class MenuView extends JFrame
 {
-	// constructor---------------------------------------------------
+	// constructor---------------------------------------
 	
 	public MenuView(MenuController controller)
 	{
@@ -45,11 +42,4 @@ public class MenuView extends JFrame implements Observer
 		getContentPane().add(btnExitGame);
 		
 	}
-	
-	// methods---------------------------------------------------------
-
-	@Override
-    public void update(Observable arg0, Object arg1) {
-	    
-    }
 }

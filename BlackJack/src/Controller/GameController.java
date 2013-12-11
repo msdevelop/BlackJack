@@ -3,6 +3,7 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import java.io.*;
 
 import Models.CardModel;
 import Views.GameView;
@@ -12,18 +13,24 @@ public class GameController implements ActionListener
 
 	// declaration--------------------------------
 
-	private GameView	gameView;
-	private CardModel[]	beginCardStack	= new CardModel[52], playerStack = new CardModel[6], dealerStack = new CardModel[6];
-	private int			chipCount = 100, playerBet, playerCount = 0, dealerCount = 0;
+	private GameView		gameView;
+	private BufferedReader 	buffReader;
+	private FileReader		fileReader;
+	private FileWriter 		writer;
+	private File 			chipStatus;
+	private CardModel[]		beginCardStack	= new CardModel[52], playerStack = new CardModel[6], dealerStack = new CardModel[6];
+	private int				chipCount, playerBet, playerCount = 0, dealerCount = 0;
 
 	// constructor--------------------------------
 
-	public GameController()
+	public GameController(String chipC)
 	{
 		this.gameView = new GameView(this);
 		this.gameView.setVisible(true);
 		this.gameView.setTextStatusBar("Bitte tätigen Sie ihren Wetteinsatz!");
+		this.chipCount = Integer.parseInt(chipC);
 		this.gameView.updateChipcount(chipCount);
+		this.initializeFileWriter();
 	}
 
 	// methods-----------------------------------
@@ -565,9 +572,57 @@ public class GameController implements ActionListener
 			Thread.sleep(i);
 		}
 		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		{}
 	}
 
+	// initialize writer, file and reader
+	public void initializeFileWriter()
+	{
+		chipStatus = new File("chipStatus.txt");
+		
+		if(!chipStatus.exists())
+		{
+			try
+			{
+				chipStatus.createNewFile();
+			}
+			catch (IOException a)
+			{
+				gameView.setTextStatusBar("Fehler beim lesen des Chipcount. Bitte neu starten!");
+			}
+		}
+		
+		try
+		{
+			writer = new FileWriter(chipStatus);
+		}
+		catch(IOException e)
+		{
+			gameView.setTextStatusBar("Fehler beim lesen des Chipcount. Bitte neu starten!");
+		}
+		
+		try
+		{
+			fileReader = new FileReader(chipStatus);
+		}
+		catch (FileNotFoundException e)
+		{}
+		
+		buffReader = new BufferedReader(fileReader);
+		
+	}
+	
+	// writes data to the .txt
+	public void writeData(String data)
+	{
+		try
+		{
+			writer.write(data);
+			writer.flush();
+		}
+		catch (IOException e)
+		{
+			gameView.setTextStatusBar("Fehler beim speichern des Chipcount. Bitte erneut versuchen!");
+		}
+	}
 }
