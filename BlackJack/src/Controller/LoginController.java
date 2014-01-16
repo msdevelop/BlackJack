@@ -2,11 +2,10 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
+import Main.MainPage;
 import Views.LoginView;
 
 public class LoginController implements ActionListener
@@ -15,8 +14,6 @@ public class LoginController implements ActionListener
 	// declaration---------------------------------------
 	
 	private LoginView 		loginView;
-	private BufferedReader 	buffReader;
-	private FileReader		fileReader;
 	private String 			username, password;
 	
 	// constructor---------------------------------------
@@ -44,31 +41,17 @@ public class LoginController implements ActionListener
 		username = loginView.getUsername();
 		password = loginView.getPassword();
 		
-		try
-		{
-			fileReader = new FileReader("chipStatus.txt");
-		}
-		catch (FileNotFoundException e)
-		{}
+		int verify = MainPage.xmlController.verifyLogin(username, password);
 		
-		buffReader = new BufferedReader(fileReader);
-		
-		try
+		if(verify != -1)
 		{
-			outerloop:
-			for(String line; (line = buffReader.readLine()) != null; )
-			{
-				if(line.equals(username) && (line = buffReader.readLine()) != null && line.equals(password))
-				{
-					line = buffReader.readLine();
-					new GameController(line);
-					loginView.dispose();
-					break outerloop;
-				}
-			}
+			new GameController(verify);
+			this.loginView.dispose();
 		}
-		catch(IOException e)
-		{}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "wrong login input");
+		}
 	}
 	
 	// creates a new profile

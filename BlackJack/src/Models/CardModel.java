@@ -49,5 +49,4 @@ public class CardModel
 	{
 		return count;
 	}
-
 }
