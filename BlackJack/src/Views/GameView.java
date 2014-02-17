@@ -26,6 +26,7 @@ public class GameView extends JFrame
 
 	public GameView(GameController controller)
 	{
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setMinimumSize(new Dimension(4, 22));
 		setMinimumSize(new Dimension(750, 530));
 		getContentPane().setLayout(null);
