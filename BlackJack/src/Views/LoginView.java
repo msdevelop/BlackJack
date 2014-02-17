@@ -7,7 +7,9 @@ import Controller.LoginController;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class LoginView extends JFrame
 {
@@ -51,9 +53,19 @@ public class LoginView extends JFrame
 		btnCreateNewProfile.addActionListener(controller);
 		btnCreateNewProfile.setBounds(31, 116, 171, 32);
 		getContentPane().add(btnCreateNewProfile);
+		
+		this.centerWindow();
 	}
 
 	// methods-------------------------------------------
+	
+	public void centerWindow()
+	{
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    this.setLocation(x, y);
+	}
 	
 	public String getUsername()
 	{

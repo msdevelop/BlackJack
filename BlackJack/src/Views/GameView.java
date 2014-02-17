@@ -5,12 +5,12 @@ import javax.swing.JFrame;
 import Controller.GameController;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
@@ -157,6 +157,8 @@ public class GameView extends JFrame
 		btnPlayAgain.addActionListener(controller);
 		btnPlayAgain.setBounds(9, 443, 239, 23);
 		getContentPane().add(btnPlayAgain);
+		
+		this.centerWindow();
 	}
 
 	// methods--------------------------------------------------------------------
@@ -311,6 +313,14 @@ public class GameView extends JFrame
 	{
 		String chipCount = Integer.toString(chipC);
 		chipcountStatus.setText(chipCount);
+	}
+	
+	public void centerWindow()
+	{
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    this.setLocation(x, y);
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.swing.JButton;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
 
 public class MenuView extends JFrame
 {
@@ -41,5 +42,15 @@ public class MenuView extends JFrame
 		btnExitGame.setBounds(10, 104, 110, 23);
 		getContentPane().add(btnExitGame);
 		
+		this.centerWindow();
+		
+	}
+	
+	public void centerWindow()
+	{
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    this.setLocation(x, y);
 	}
 }
