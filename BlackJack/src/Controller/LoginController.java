@@ -75,9 +75,21 @@ public class LoginController implements ActionListener
 		
 		if (verify != -1) 
 		{
-			new GameController(verify, username);
-			this.loginView.dispose();
-		} 
+			if(verify > 0)
+			{
+				new GameController(verify, username);
+				this.loginView.dispose();
+			}
+			else if(username.equals("Admin"))
+			{
+				new GameController(verify, username);
+				this.loginView.dispose();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "chipcount empty");
+			}
+		}
 		else 
 		{
 			JOptionPane.showMessageDialog(null, "wrong login input");

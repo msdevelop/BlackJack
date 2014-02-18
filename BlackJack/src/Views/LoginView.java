@@ -10,12 +10,14 @@ import javax.swing.JButton;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JPasswordField;
 
 public class LoginView extends JFrame
 {
 	// declaration--------------------------------
 	
-	private JTextField password, username;
+	private JTextField username;
+	private JPasswordField password;
 	
 	// constructor---------------------------------------
 	
@@ -30,11 +32,6 @@ public class LoginView extends JFrame
 		username.setBounds(116, 21, 86, 20);
 		getContentPane().add(username);
 		username.setColumns(10);
-		
-		password = new JTextField();
-		password.setBounds(116, 71, 86, 20);
-		getContentPane().add(password);
-		password.setColumns(10);
 		
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setBounds(31, 24, 75, 14);
@@ -62,6 +59,10 @@ public class LoginView extends JFrame
 		btnExit.setBounds(227, 116, 86, 32);
 		getContentPane().add(btnExit);
 		
+		password = new JPasswordField();
+		password.setBounds(116, 71, 86, 20);
+		getContentPane().add(password);
+		
 		this.centerWindow();
 	}
 
@@ -82,6 +83,6 @@ public class LoginView extends JFrame
 	
 	public String getPassword()
 	{
-		return password.getText();
+		return new String(password.getPassword());
 	}
 }

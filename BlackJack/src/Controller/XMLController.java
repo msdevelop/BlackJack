@@ -125,10 +125,14 @@ public class XMLController
 		}
 	}
 	
-	public int verifyLogin(String user, String pw) {
-		for (count = 0; count < loginList.size(); count++) {
-			if (loginList.get(count).getUsername().equals(user)) {
-				if (loginList.get(count).getPassword().equals(pw)) {
+	public int verifyLogin(String user, String pw) 
+	{
+		for (count = 0; count < loginList.size(); count++) 
+		{
+			if (loginList.get(count).getUsername().equals(user)) 
+			{
+				if (loginList.get(count).getPassword().equals(pw)) 
+				{
 					int chipC = loginList.get(count).getChipcount();
 					return chipC;
 				}
