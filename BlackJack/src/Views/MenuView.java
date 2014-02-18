@@ -18,28 +18,29 @@ public class MenuView extends JFrame
 	
 	public MenuView(MenuController controller)
 	{
+		setResizable(false);
 		setLocation(new Point(100, 100));
-		setMinimumSize(new Dimension(150, 215));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(220, 215));
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Menu Black Jack");
 		getContentPane().setLayout(null);
 		
 		JLabel lblMen = new JLabel("Men\u00FC:");
 		lblMen.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMen.setBounds(10, 11, 47, 36);
+		lblMen.setBounds(45, 11, 106, 36);
 		getContentPane().add(lblMen);
 		
 		JButton btnNewGame = new JButton("Neues Spiel");
 		btnNewGame.setActionCommand("startNewGame");
 		btnNewGame.addActionListener(controller);
-		btnNewGame.setBounds(10, 60, 110, 23);
+		btnNewGame.setBounds(10, 60, 194, 37);
 		getContentPane().add(btnNewGame);
 		
 		JButton btnExitGame = new JButton("Exit");
 		btnExitGame.setActionCommand("exitMenu");
 		btnExitGame.addActionListener(controller);
 		
-		btnExitGame.setBounds(10, 104, 110, 23);
+		btnExitGame.setBounds(10, 119, 194, 36);
 		getContentPane().add(btnExitGame);
 		
 		this.centerWindow();

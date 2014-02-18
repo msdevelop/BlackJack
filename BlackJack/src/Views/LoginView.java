@@ -21,6 +21,8 @@ public class LoginView extends JFrame
 	
 	public LoginView(LoginController controller)
 	{
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setResizable(false);
 		setMinimumSize(new Dimension(360, 210));
 		getContentPane().setLayout(null);
 		
@@ -53,6 +55,12 @@ public class LoginView extends JFrame
 		btnCreateNewProfile.addActionListener(controller);
 		btnCreateNewProfile.setBounds(31, 116, 171, 32);
 		getContentPane().add(btnCreateNewProfile);
+		
+		JButton btnExit = new JButton("Exit");
+		btnExit.setActionCommand("exit");
+		btnExit.addActionListener(controller);
+		btnExit.setBounds(227, 116, 86, 32);
+		getContentPane().add(btnExit);
 		
 		this.centerWindow();
 	}

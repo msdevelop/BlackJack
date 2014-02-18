@@ -33,45 +33,71 @@ public class LoginController implements ActionListener
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("login"))
+		{
 			this.verifyLogin();
-		else
-			if (e.getActionCommand().equals("createNewProfile"))
-	            try {
-	                this.createNewProfile(loginView.getUsername(), loginView.getPassword());
-                } catch (TransformerFactoryConfigurationError e1) {
-	                // TODO Auto-generated catch block
-	                e1.printStackTrace();
-                } catch (TransformerException e1) {
-	                // TODO Auto-generated catch block
-	                e1.printStackTrace();
-                }
+		}
+		else if (e.getActionCommand().equals("createNewProfile"))
+		{
+			try 
+			{
+	           	if((loginView.getUsername().length() >= 4) && (loginView.getUsername().length() <= 10) && (loginView.getPassword().length() >= 4) && (loginView.getPassword().length() <= 10))
+	           	{
+	           		this.createNewProfile(loginView.getUsername(), loginView.getPassword());	
+	           	}
+	           	else
+	           	{
+	           		JOptionPane.showMessageDialog(null, "Username und Passwort dürfen nicht länger als 10 und nicht kürzer als 4 Zeichen sein.");
+	           	}
+            } 
+			catch (TransformerFactoryConfigurationError e1)
+			{
+				e1.printStackTrace();
+            } 
+			catch (TransformerException e1) 
+            {
+				e1.printStackTrace();
+            }
+		}
+		else if(e.getActionCommand().equals("exit"))
+		{
+			System.exit(0);
+		}
 	}
 	
 	// verifies if the given login data is correct
-	public void verifyLogin() {
+	public void verifyLogin() 
+	{
+		
 		username = loginView.getUsername();
 		password = loginView.getPassword();
 		
 		int verify = MainPage.xmlController.verifyLogin(username, password);
 		
-		if (verify != -1) {
+		if (verify != -1) 
+		{
 			new GameController(verify, username);
 			this.loginView.dispose();
-		} else {
+		} 
+		else 
+		{
 			JOptionPane.showMessageDialog(null, "wrong login input");
 		}
 	}
 	
 	// creates a new profile
-	public void createNewProfile(String user, String pw) throws TransformerFactoryConfigurationError, TransformerException {
+	public void createNewProfile(String user, String pw) throws TransformerFactoryConfigurationError, TransformerException 
+	{
 			
-		try {
+		try 
+		{
 			MainPage.xmlController.addNodeToXML(user, pw);
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SAXException e) 
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (IOException e) 
+		{
 			e.printStackTrace();
 		}
 	}

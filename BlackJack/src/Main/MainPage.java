@@ -7,9 +7,14 @@ public class MainPage
 {
 	public static XMLController xmlController;
 	
-	public static void main(String[] args) 
+	public MainPage()
 	{
 		xmlController = new XMLController();
 		new MenuController();
+	}
+	
+	public static void main(String[] args) 
+	{
+		new MainPage();
 	}
 }
