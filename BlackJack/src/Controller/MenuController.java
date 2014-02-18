@@ -35,5 +35,11 @@ public class MenuController implements ActionListener
 			{
 				System.exit(0);
 			}
+		else
+			if(e.getActionCommand().equals("adminControl"))
+			{
+				new AdminController();
+				this.menuView.dispose();
+			}
 	}
 }

@@ -16,6 +16,7 @@ public class LoginView extends JFrame
 {
 	// declaration--------------------------------
 	
+	private static final long serialVersionUID = 4966222642786917578L;
 	private JTextField username;
 	private JPasswordField password;
 	

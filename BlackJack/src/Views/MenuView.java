@@ -16,11 +16,13 @@ public class MenuView extends JFrame
 {
 	// constructor---------------------------------------
 	
+	private static final long serialVersionUID = 257876113542452239L;
+
 	public MenuView(MenuController controller)
 	{
 		setResizable(false);
 		setLocation(new Point(100, 100));
-		setMinimumSize(new Dimension(220, 215));
+		setMinimumSize(new Dimension(220, 240));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Menu Black Jack");
 		getContentPane().setLayout(null);
@@ -40,8 +42,14 @@ public class MenuView extends JFrame
 		btnExitGame.setActionCommand("exitMenu");
 		btnExitGame.addActionListener(controller);
 		
-		btnExitGame.setBounds(10, 119, 194, 36);
+		btnExitGame.setBounds(10, 155, 194, 36);
 		getContentPane().add(btnExitGame);
+		
+		JButton btnAdminControlPanel = new JButton("admin control panel");
+		btnAdminControlPanel.setActionCommand("adminControl");
+		btnAdminControlPanel.addActionListener(controller);
+		btnAdminControlPanel.setBounds(10, 108, 194, 36);
+		getContentPane().add(btnAdminControlPanel);
 		
 		this.centerWindow();
 		

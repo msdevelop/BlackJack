@@ -18,6 +18,7 @@ public class GameView extends JFrame
 {
 	// declaration--------------------------------
 	
+	private static final long serialVersionUID = 4737685724946054014L;
 	private JTextField	betInput;
 	private JTextArea	statusBar, betStatus, playerOut, dealerOut, cardSumDealer, cardSumPlayer, chipcountStatus;
 	private JButton		btnLeaveTable, btnPlaceBet, btnStay, btnHit, btnPlayAgain;
