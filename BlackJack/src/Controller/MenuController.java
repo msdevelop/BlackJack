@@ -3,6 +3,8 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import Views.MenuView;
 
 public class MenuController implements ActionListener
@@ -38,8 +40,15 @@ public class MenuController implements ActionListener
 		else
 			if(e.getActionCommand().equals("adminControl"))
 			{
-				new AdminController();
-				this.menuView.dispose();
+				String option = JOptionPane.showInputDialog(null,
+				        "Admin Login", "Admin Login",
+				        JOptionPane.OK_CANCEL_OPTION);
+				if (option.equals("admin")) {
+					
+					new AdminController();
+					this.menuView.dispose();
+					
+				}
 			}
 	}
 }
