@@ -248,4 +248,9 @@ public class XMLController
 		transformer.transform(new DOMSource(node), xmlOutput);
 		return xmlOutput.getWriter().toString();
 	}
+	
+	public LinkedList<ListModel> getLoginList()
+	{
+		return this.loginList;
+	}
 }
