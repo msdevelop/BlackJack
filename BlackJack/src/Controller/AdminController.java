@@ -15,19 +15,24 @@ import Views.AdminView;
 
 public class AdminController implements ActionListener
 {
-
+	// declaration--------------------------------
+	
 	private LinkedList<ListModel>	userList;
 	private AdminView				adminView;
 	private String[]				playerArrayList;
 
+	// constructor--------------------------------
+	
 	public AdminController()
 	{
-
 		this.userList = MainPage.xmlController.getLoginList();
 		setPlayerArrayList();
 		this.adminView = new AdminView(this, playerArrayList);
 	}
 
+	// methods-----------------------------------
+	
+	// button actionCommands
 	public void actionPerformed(ActionEvent aE) {
 		if (aE.getActionCommand().equals("show")) 
 		{
@@ -93,7 +98,33 @@ public class AdminController implements ActionListener
 			}
 		}
 	}
+	
+	//TODO COMMENT
+	public void showProperties()
+	{
+		int index = adminView.getSelectedItem();
 
+		this.adminView.setPropUsername(this.userList.get(index).getUsername());
+		this.adminView
+				.setPropChipcount(this.userList.get(index).getChipcount());
+	}
+
+	//TODO COMMENT
+	public void resetPassword() throws TransformerException
+	{
+		int index = adminView.getSelectedItem();
+
+		Random randomGenerator = new Random();
+		Integer randomNumber = randomGenerator.nextInt(99999 - 10000) + 10000;
+		String newPassword = randomNumber.toString();
+
+		MainPage.xmlController.savePasswordToXML(this.userList.get(index)
+				.getUsername(), newPassword, 1);
+	}
+	
+	// set-block--------------------------------
+
+	//TODO COMMENT
 	public void setPlayerArrayList()
 	{
 
@@ -105,31 +136,13 @@ public class AdminController implements ActionListener
 		}
 	}
 
+	// get-block--------------------------------
+	
+	//TODO COMMENT
 	public String getPlayerFromList()
 	{
 		int index = adminView.getSelectedItem();
 
 		return this.userList.get(index).getUsername();
-	}
-
-	public void showProperties()
-	{
-		int index = adminView.getSelectedItem();
-
-		this.adminView.setPropUsername(this.userList.get(index).getUsername());
-		this.adminView
-				.setPropChipcount(this.userList.get(index).getChipcount());
-	}
-
-	public void resetPassword() throws TransformerException
-	{
-		int index = adminView.getSelectedItem();
-
-		Random randomGenerator = new Random();
-		Integer randomNumber = randomGenerator.nextInt(99999 - 10000) + 10000;
-		String newPassword = randomNumber.toString();
-
-		MainPage.xmlController.savePasswordToXML(this.userList.get(index)
-				.getUsername(), newPassword, 1);
 	}
 }

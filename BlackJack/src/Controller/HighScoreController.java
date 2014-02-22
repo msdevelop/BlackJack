@@ -1,6 +1,5 @@
 package Controller;
 
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -11,10 +10,15 @@ import Views.HighScoreView;
 
 public class HighScoreController implements ActionListener
 {
+	
+	// declaration--------------------------------
+	
 	private LinkedList<ListModel> highScoreList = new LinkedList<ListModel>();
 	private HighScoreView highScoreView;
 	private String[] chipCountList;
 	private String[] playerList;
+	
+	// constructor--------------------------------
 	
 	public HighScoreController()
 	{
@@ -25,6 +29,9 @@ public class HighScoreController implements ActionListener
 		this.highScoreView.setVisible(true);
 	}
 	
+	// methods-----------------------------------
+	
+	// button actionCommands
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("close")) {
 			new MenuController();
@@ -33,6 +40,7 @@ public class HighScoreController implements ActionListener
 		
 	}
 	
+	//TODO COMMENT
 	public void createChipCountList(LinkedList<ListModel> list) {
 		chipCountList = new String[list.size()];
 		
@@ -42,6 +50,7 @@ public class HighScoreController implements ActionListener
 		}
 	}
 	
+	//TODO COMMENT
 	public void createPlayerList(LinkedList<ListModel> list) {
 		playerList = new String[list.size()];
 		

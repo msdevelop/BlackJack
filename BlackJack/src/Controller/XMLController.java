@@ -2,17 +2,13 @@ package Controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.Text;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
@@ -29,6 +25,9 @@ import Models.ListModel;
 
 public class XMLController
 {
+	
+	// declaration--------------------------------
+	
 	private DocumentBuilderFactory docFactory;
 	private DocumentBuilder docBuilder;
 	private Document doc;
@@ -41,12 +40,17 @@ public class XMLController
 	private int chipcount, count;
 	private LinkedList<ListModel> loginList = new LinkedList<ListModel>();
 	
+	// constructor--------------------------------
+	
 	public XMLController()
 	{
 		this.initializeXMLFile();
 		this.readFile();
 	}
 	
+	// methods-----------------------------------
+	
+	//TODO COMMENT
 	public void initializeXMLFile() {
 		
 		File file = new File("GameData.xml");
@@ -76,6 +80,7 @@ public class XMLController
 		
 	}
 	
+	//TODO COMMENT
 	public void readFile() {
 		try {
 			
@@ -110,6 +115,7 @@ public class XMLController
 		}
 	}
 	
+	//TODO COMMENT
 	public int verifyLogin(String user, String pw) {
 		
 		NodeList playerList = doc.getElementsByTagName("player");
@@ -150,6 +156,7 @@ public class XMLController
 		return -1;
 	}
 	
+	//TODO COMMENT
 	public void addNodeToXML(String user, String pw) throws SAXException,
 	        IOException, TransformerFactoryConfigurationError,
 	        TransformerException {
@@ -215,6 +222,7 @@ public class XMLController
 		}
 	}
 	
+	//TODO COMMENT
 	public void saveChipcountToXML(String user, int count)
 	        throws TransformerFactoryConfigurationError, TransformerException {
 		
@@ -247,6 +255,7 @@ public class XMLController
 		
 	}
 	
+	//TODO COMMENT
 	public void deletePlayer(String user)
 	        throws TransformerFactoryConfigurationError, TransformerException {
 		
@@ -276,6 +285,7 @@ public class XMLController
 		
 	}
 	
+	//TODO COMMENT
 	public void savePasswordToXML(String user, String newPassword, int flag)
 	        throws TransformerException {
 		
@@ -312,7 +322,10 @@ public class XMLController
 		readFile();
 	}
 	
-	public Boolean getChipCount(String user) {
+	// get-block--------------------------------
+	
+	//TODO COMMENT
+	public boolean getChipCount(String user) {
 		
 		NodeList playerList = doc.getElementsByTagName("player");
 		Element playerItem = null;
@@ -330,6 +343,7 @@ public class XMLController
 		return false;
 	}
 	
+	//TODO COMMENT
 	public LinkedList<ListModel> getHighScoreList() {
 		LinkedList<ListModel> highScoreList = new LinkedList<ListModel>();
 		if (loginList.size() != 0) {

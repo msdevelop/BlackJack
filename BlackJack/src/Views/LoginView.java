@@ -69,6 +69,7 @@ public class LoginView extends JFrame
 
 	// methods-------------------------------------------
 	
+	//TODO COMMENT
 	public void centerWindow()
 	{
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -76,6 +77,8 @@ public class LoginView extends JFrame
 	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
 	    this.setLocation(x, y);
 	}
+	
+	// get-block--------------------------------
 	
 	public String getUsername()
 	{

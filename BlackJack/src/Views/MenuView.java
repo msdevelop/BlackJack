@@ -14,10 +14,13 @@ import java.awt.Toolkit;
 
 public class MenuView extends JFrame
 {
-	// constructor---------------------------------------
+
+	// declaration--------------------------------
 	
 	private static final long serialVersionUID = 257876113542452239L;
 
+	// constructor--------------------------------
+	
 	public MenuView(MenuController controller)
 	{
 		setResizable(false);
@@ -67,6 +70,9 @@ public class MenuView extends JFrame
 		
 	}
 	
+	// methods-----------------------------------
+	
+	//TODO COMMENT
 	public void centerWindow()
 	{
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

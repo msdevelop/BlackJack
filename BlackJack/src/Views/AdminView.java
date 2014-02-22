@@ -1,7 +1,6 @@
 package Views;
 
 import Controller.AdminController;
-import Models.ListModel;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -9,10 +8,8 @@ import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.LinkedList;
 
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -20,12 +17,16 @@ import java.awt.Font;
 public class AdminView extends JFrame
 {
 	
+	// declaration--------------------------------
+	
 	private static final long serialVersionUID = 1100530105788697653L;
 	private JList userList;
 	private JScrollPane scrollpane;
 	private String[] playerArrayList;
 	private JTextField propUsername;
 	private JTextField propChipcount;
+	
+	// constructor--------------------------------
 	
 	public AdminView(AdminController controller, String[] paramPlayerArrayList)
 	{
@@ -95,10 +96,18 @@ public class AdminView extends JFrame
 		this.centerWindow();
 	}
 	
-	public int getSelectedItem()
+	// methods-----------------------------------
+	
+	//TODO COMMENT
+	public void centerWindow()
 	{
-		return userList.getSelectedIndex();
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    this.setLocation(x, y);
 	}
+	
+	// set-block--------------------------------
 	
 	public void setPropUsername(String paramUsername)
 	{
@@ -116,11 +125,10 @@ public class AdminView extends JFrame
 		scrollpane.setViewportView(userList);
 	}
 	
-	public void centerWindow()
+	// get-block--------------------------------
+	
+	public int getSelectedItem()
 	{
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
-	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
-	    this.setLocation(x, y);
+		return userList.getSelectedIndex();
 	}
 }

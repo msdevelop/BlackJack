@@ -8,21 +8,22 @@ import javax.swing.JFrame;
 import Controller.HighScoreController;
 
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import java.awt.Font;
 
 public class HighScoreView extends JFrame
 {
 	
-	public HighScoreView(HighScoreController controller,
-	        String[] paramChipCountList, String[] paramPlayerList)
+	// declaration--------------------------------
+	
+	private static final long serialVersionUID = 7575188349212040622L;
+	
+	// constructor--------------------------------
+
+	public HighScoreView(HighScoreController controller, String[] paramChipCountList, String[] paramPlayerList)
 	{
 		setResizable(false);
-
-		
 		setTitle("Highscore");
 		setMinimumSize(new Dimension(300, 380));
 		getContentPane().setLayout(null);
@@ -38,10 +39,12 @@ public class HighScoreView extends JFrame
 		nameArea.setFocusable(false);
 		nameArea.setEditable(false);
 		int i = 0;
-		for (i = 0; i < paramPlayerList.length; i++) {
+		for (i = 0; i < paramPlayerList.length; i++) 
+		{
 			nameArea.append(i + 1 + ") " + paramPlayerList[i] + "\n");
 		}
-		for (i = i; i < 10; i++) {
+		for (i = i; i < 10; i++) 
+		{
 			nameArea.append(i + 1 + ") " + "NN" + "\n");
 		}
 		nameArea.setBounds(33, 78, 141, 196);
@@ -68,6 +71,9 @@ public class HighScoreView extends JFrame
 		
 	}
 	
+	// methods-----------------------------------
+	
+	//TODO COMMENT
 	public void centerWindow() 
 	{
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

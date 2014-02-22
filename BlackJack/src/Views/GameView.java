@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 
 public class GameView extends JFrame
 {
+	
 	// declaration--------------------------------
 	
 	private static final long serialVersionUID = 4737685724946054014L;
@@ -23,7 +24,7 @@ public class GameView extends JFrame
 	private JTextArea	statusBar, betStatus, playerOut, dealerOut, cardSumDealer, cardSumPlayer, chipcountStatus;
 	private JButton		btnLeaveTable, btnPlaceBet, btnStay, btnHit, btnPlayAgain;
 
-	// constructor----------------------------------------------------------------------------------
+	// constructor--------------------------------
 
 	public GameView(GameController controller)
 	{
@@ -163,25 +164,7 @@ public class GameView extends JFrame
 		this.centerWindow();
 	}
 
-	// methods--------------------------------------------------------------------
-
-	// prints player cards
-	public void setPlayerOut(String playerOutInput)
-	{
-		playerOut.setText(playerOutInput);
-	}
-
-	// prints dealer cards
-	public void setDealerOut(String dealerOutInput)
-	{
-		dealerOut.setText(dealerOutInput);
-	}
-
-	// returns betInput
-	public int getBet()
-	{
-		return Integer.parseInt(betInput.getText());
-	}
+	// methods-----------------------------------
 
 	// verifys if input in betInput is a valid int
 	public boolean verifyBet()
@@ -201,22 +184,46 @@ public class GameView extends JFrame
 
 	}
 
-	// overwrites text in statusBar with new text
-	public void setTextStatusBar(String statusText)
-	{
-		statusBar.setText(statusText);
-	}
-
-	// adds given text to the status bar
-	public void appendTextStatusBar(String statusText)
-	{
-		statusBar.append(" ---------- " + statusText);
-	}
-
 	// updates text in statusBar
 	public void updateUI()
 	{
 		this.update(getGraphics());
+	}
+
+	//TODO COMMENT
+	public void centerWindow()
+	{
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    this.setLocation(x, y);
+	}
+	
+	// set-block--------------------------------
+	
+	//TODO COMMENT
+	public void updateChipcount(int chipC)
+	{
+		String chipCount = Integer.toString(chipC);
+		chipcountStatus.setText(chipCount);
+	}
+	
+	// resets gameView textFields to default
+	public void clearTextFields()
+	{
+		betInput.setText("");
+		cardSumPlayer.setText("");
+		cardSumDealer.setText("");
+		dealerOut.setText("");
+		playerOut.setText("");
+		statusBar.setText("Bitte tätigen Sie ihren Wetteinsatz.");
+		betStatus.setText("");
+	}
+	
+	// adds given text to the status bar
+	public void appendTextStatusBar(String statusText)
+	{
+		statusBar.append(" ---------- " + statusText);
 	}
 	
 	// disables btnSetBet
@@ -268,7 +275,25 @@ public class GameView extends JFrame
 	{
 		btnPlayAgain.setEnabled(false);
 	}
+	
+	// prints player cards
+	public void setPlayerOut(String playerOutInput)
+	{
+		playerOut.setText(playerOutInput);
+	}
 
+	// prints dealer cards
+	public void setDealerOut(String dealerOutInput)
+	{
+		dealerOut.setText(dealerOutInput);
+	}
+	
+	// overwrites text in statusBar with new text
+	public void setTextStatusBar(String statusText)
+	{
+		statusBar.setText(statusText);
+	}
+	
 	// prints betStatus
 	public void setBetStatus(String betStatusInput)
 	{
@@ -287,6 +312,8 @@ public class GameView extends JFrame
 		cardSumDealer.setText(sumInput);
 	}
 	
+	// get-block--------------------------------
+	
 	// returns card sum of player
 	public String getCardSumPlayer()
 	{
@@ -298,31 +325,10 @@ public class GameView extends JFrame
 	{
 		return cardSumDealer.getText();
 	}
-	
-	// resets gameView textFields to default
-	public void clearTextFields()
-	{
-		betInput.setText("");
-		cardSumPlayer.setText("");
-		cardSumDealer.setText("");
-		dealerOut.setText("");
-		playerOut.setText("");
-		statusBar.setText("Bitte tätigen Sie ihren Wetteinsatz.");
-		betStatus.setText("");
-	}
 
-	public void updateChipcount(int chipC)
+	// returns betInput
+	public int getBet()
 	{
-		String chipCount = Integer.toString(chipC);
-		chipcountStatus.setText(chipCount);
+		return Integer.parseInt(betInput.getText());
 	}
-	
-	public void centerWindow()
-	{
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
-	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
-	    this.setLocation(x, y);
-	}
-
 }

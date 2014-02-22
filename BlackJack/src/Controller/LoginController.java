@@ -31,6 +31,7 @@ public class LoginController implements ActionListener
 	
 	// methods-------------------------------------------
 	
+	// button actionCommands
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("login"))
 		{

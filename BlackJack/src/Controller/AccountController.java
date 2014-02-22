@@ -12,8 +12,13 @@ import Views.AccountView;
 
 public class AccountController implements ActionListener
 {
-	AccountView accountView;
-	String actualUser;
+	
+	// declaration--------------------------------
+	
+	private AccountView accountView;
+	private String actualUser;
+	
+	// constructor--------------------------------
 	
 	public AccountController(String user)
 	{
@@ -21,6 +26,9 @@ public class AccountController implements ActionListener
 		this.accountView = new AccountView(this, user);
 	}
 	
+	// methods-----------------------------------
+	
+	// button actionCommands
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("changePassword")) {
 			String passwordDialog = JOptionPane.showInputDialog(null,
@@ -33,7 +41,6 @@ public class AccountController implements ActionListener
 						MainPage.xmlController.savePasswordToXML(actualUser,
 						        passwordDialog, 0);
 					} catch (TransformerException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					JOptionPane.showMessageDialog(null,
@@ -56,10 +63,8 @@ public class AccountController implements ActionListener
 						        .showMessageDialog(null,
 						                "Ihnen wurden erfolgreich neue Chips zugeteilt.");
 					} catch (TransformerFactoryConfigurationError e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (TransformerException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} else {
