@@ -22,7 +22,7 @@ public class MenuView extends JFrame
 	{
 		setResizable(false);
 		setLocation(new Point(100, 100));
-		setMinimumSize(new Dimension(220, 240));
+		setMinimumSize(new Dimension(220, 350));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Menu Black Jack");
 		getContentPane().setLayout(null);
@@ -42,14 +42,26 @@ public class MenuView extends JFrame
 		btnExitGame.setActionCommand("exitMenu");
 		btnExitGame.addActionListener(controller);
 		
-		btnExitGame.setBounds(10, 155, 194, 36);
+		btnExitGame.setBounds(10, 248, 194, 36);
 		getContentPane().add(btnExitGame);
 		
-		JButton btnAdminControlPanel = new JButton("admin control panel");
+		JButton btnAdminControlPanel = new JButton("Adminbereich");
 		btnAdminControlPanel.setActionCommand("adminControl");
 		btnAdminControlPanel.addActionListener(controller);
-		btnAdminControlPanel.setBounds(10, 108, 194, 36);
+		btnAdminControlPanel.setBounds(10, 201, 194, 36);
 		getContentPane().add(btnAdminControlPanel);
+		
+		JButton btnAccountControl = new JButton("Accountverwaltung");
+		btnAccountControl.setActionCommand("accountControl");
+		btnAccountControl.addActionListener(controller);
+		btnAccountControl.setBounds(10, 156, 194, 34);
+		getContentPane().add(btnAccountControl);
+		
+		JButton btnHighScores = new JButton("Highscores");
+		btnHighScores.setActionCommand("highScores");
+		btnHighScores.addActionListener(controller);
+		btnHighScores.setBounds(10, 108, 194, 37);
+		getContentPane().add(btnHighScores);
 		
 		this.centerWindow();
 		

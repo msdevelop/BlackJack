@@ -21,44 +21,39 @@ public class AdminView extends JFrame
 	
 	private static final long serialVersionUID = 1100530105788697653L;
 	JList userList;
-	String[] defaultList;
 	JEditorPane propUsername, propChipcount;
 	
-	public AdminView(AdminController controller, LinkedList<ListModel> paramUserList)
+	public AdminView(AdminController controller)
 	{
-		defaultList = new String[paramUserList.size()];
 		setMinimumSize(new Dimension(900, 800));
 		getContentPane().setLayout(null);
 		setVisible(true);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		for(int i = 1; i < paramUserList.size(); i++)
-		{
-			defaultList[i] = paramUserList.get(i).getUsername();
-		}
 		
 		// JList <String> erst wenn UI fertig da sonst error on parse
-		userList = new JList(defaultList);
+		userList = new JList(controller.playerArrayList);
 		JScrollPane scrollpane = new JScrollPane();
 		scrollpane.setBounds(10, 67, 150, 200);		
 		scrollpane.setViewportView(userList);
 		getContentPane().add(scrollpane);
 		
-		JButton btnEditUser = new JButton("Bearbeiten");
-		btnEditUser.setActionCommand("edit");
+		JButton btnEditUser = new JButton("Passwort zur\u00FCcksetzen");
+		btnEditUser.setActionCommand("reset");
 		btnEditUser.addActionListener(controller);
 		btnEditUser.setBounds(170, 244, 150, 23);
 		getContentPane().add(btnEditUser);
 		
-		JButton btnDeleteUser = new JButton("L\u00F6schen");
+		JButton btnDeleteUser = new JButton("Account l\u00F6schen");
 		btnDeleteUser.setActionCommand("delete");
 		btnDeleteUser.addActionListener(controller);
-		btnDeleteUser.setBounds(170, 141, 150, 23);
+		btnDeleteUser.setBounds(170, 210, 150, 23);
 		getContentPane().add(btnDeleteUser);
 		
-		JButton btnShowProperties = new JButton("Anzeigen");
+		JButton btnShowProperties = new JButton("Detail anzeigen");
 		btnShowProperties.setActionCommand("show");
 		btnShowProperties.addActionListener(controller);
-		btnShowProperties.setBounds(170, 208, 150, 23);
+		btnShowProperties.setBounds(170, 175, 150, 23);
 		getContentPane().add(btnShowProperties);
 		
 		propUsername = new JEditorPane();
@@ -78,6 +73,12 @@ public class AdminView extends JFrame
 		JLabel lblChipcount = new JLabel("Chipcount:");
 		lblChipcount.setBounds(10, 414, 150, 23);
 		getContentPane().add(lblChipcount);
+		
+		JButton btnClose = new JButton("Schlie\u00DFen");
+		btnClose.setActionCommand("close");
+		btnClose.addActionListener(controller);
+		btnClose.setBounds(57, 515, 103, 23);
+		getContentPane().add(btnClose);
 		
 		this.centerWindow();
 	}

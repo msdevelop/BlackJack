@@ -60,7 +60,8 @@ public class LoginController implements ActionListener
 		}
 		else if(e.getActionCommand().equals("exit"))
 		{
-			System.exit(0);
+			this.loginView.dispose();
+			new MenuController();
 		}
 	}
 	

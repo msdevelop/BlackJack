@@ -61,21 +61,21 @@ public class XMLController
 				Element root = doc.createElement("list");
 				doc.appendChild(root);
 				
-				Element player = doc.createElement("player");
-				root.appendChild(player);
+				// Element player = doc.createElement("player");
+				// root.appendChild(player);
 				
-				Element username = doc.createElement("username");
-				username.appendChild(doc.createTextNode("Admin"));
-				player.appendChild(username);
+				// Element username = doc.createElement("username");
+				// username.appendChild(doc.createTextNode("Admin"));
+				// player.appendChild(username);
+				//
+				// Element password = doc.createElement("password");
+				// password.appendChild(doc.createTextNode("admin"));
+				// player.appendChild(password);
+				//
+				// Element chipCount = doc.createElement("chipcount");
+				// chipCount.appendChild(doc.createTextNode("0"));
+				// player.appendChild(chipCount);
 				
-				Element password = doc.createElement("password");
-				password.appendChild(doc.createTextNode("admin"));
-				player.appendChild(password);
-				
-				Element chipCount = doc.createElement("chipcount");
-				chipCount.appendChild(doc.createTextNode("0"));
-				player.appendChild(chipCount);
-								
 				transformerFactory = TransformerFactory.newInstance();
 				transformer = transformerFactory.newTransformer();
 				source = new DOMSource(doc);
@@ -125,14 +125,31 @@ public class XMLController
 		}
 	}
 	
-	public int verifyLogin(String user, String pw) 
-	{
-		for (count = 0; count < loginList.size(); count++) 
-		{
-			if (loginList.get(count).getUsername().equals(user)) 
-			{
-				if (loginList.get(count).getPassword().equals(pw)) 
-				{
+	public int verifyLogin(String user, String pw) {
+		
+		NodeList playerList = doc.getElementsByTagName("player");
+		Element playerItem = null;
+		
+		for (int i = 0; i < playerList.getLength(); i++) {
+			
+			playerItem = (Element) playerList.item(i);
+			String message = playerItem.getElementsByTagName("message").item(0)
+			        .getFirstChild().getNodeValue();
+			String name = playerItem.getElementsByTagName("username").item(0)
+			        .getFirstChild().getNodeValue();
+			
+			if (name.equals(user) && !message.equals(" ")) {
+				JOptionPane.showMessageDialog(null, message);
+				
+				Node oldMessage = playerItem.getElementsByTagName("message")
+				        .item(0).getFirstChild();
+				oldMessage.setNodeValue(" ");
+			}
+		}
+		
+		for (count = 0; count < loginList.size(); count++) {
+			if (loginList.get(count).getUsername().equals(user)) {
+				if (loginList.get(count).getPassword().equals(pw)) {
 					int chipC = loginList.get(count).getChipcount();
 					return chipC;
 				}
@@ -154,12 +171,10 @@ public class XMLController
 		for (int i = 0; i < playerList.getLength(); i++) {
 			
 			playerItem = (Element) playerList.item(i);
-			Node name = playerItem.getElementsByTagName("username").item(0)
-			        .getFirstChild();
+			String name = playerItem.getElementsByTagName("username").item(0)
+			        .getFirstChild().getNodeValue();
 			
-			String convertedUserName = convertNodeToString(name);
-			
-			if (convertedUserName.equals(user)) {
+			if (name.equals(user)) {
 				isInXML = true;
 			}
 		}
@@ -183,6 +198,10 @@ public class XMLController
 				Element chipCount = doc.createElement("chipcount");
 				chipCount.appendChild(doc.createTextNode("700"));
 				player.appendChild(chipCount);
+				
+				Element message = doc.createElement("message");
+				message.appendChild(doc.createTextNode(" "));
+				player.appendChild(message);
 				
 				transformerFactory = TransformerFactory.newInstance();
 				transformer = transformerFactory.newTransformer();
@@ -216,11 +235,10 @@ public class XMLController
 		for (int i = 0; i < playerList.getLength(); i++) {
 			
 			playerItem = (Element) playerList.item(i);
-			Node name = playerItem.getElementsByTagName("username").item(0)
-			        .getFirstChild();
-			String convertedUserName = convertNodeToString(name);
+			String name = playerItem.getElementsByTagName("username").item(0)
+			        .getFirstChild().getNodeValue();
 			
-			if (convertedUserName.equals(user)) {
+			if (name.equals(user)) {
 				Node chipCount = playerItem.getElementsByTagName("chipcount")
 				        .item(0).getFirstChild();
 				chipCount.setNodeValue(countTmp.toString());
@@ -238,19 +256,126 @@ public class XMLController
 		
 	}
 	
-	static String convertNodeToString(Node node)
+	public void deletePlayer(String user)
 	        throws TransformerFactoryConfigurationError, TransformerException {
 		
-		StreamResult xmlOutput = new StreamResult(new StringWriter());
-		Transformer transformer = TransformerFactory.newInstance()
-		        .newTransformer();
-		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-		transformer.transform(new DOMSource(node), xmlOutput);
-		return xmlOutput.getWriter().toString();
+		NodeList playerList = doc.getElementsByTagName("player");
+		Element playerItem = null;
+		
+		for (int i = 0; i < playerList.getLength(); i++) {
+			
+			playerItem = (Element) playerList.item(i);
+			String playerName = playerItem.getElementsByTagName("username")
+			        .item(0).getFirstChild().getNodeValue();
+			
+			if (playerName.equals(user)) {
+				
+				playerList.item(i).getParentNode()
+				        .removeChild(playerList.item(i));
+				
+				transformerFactory = TransformerFactory.newInstance();
+				transformer = transformerFactory.newTransformer();
+				source = new DOMSource(doc);
+				result = new StreamResult(new File("GameData.xml"));
+				
+				transformer.transform(source, result);
+			}
+		}
+		readFile();
+		
 	}
 	
-	public LinkedList<ListModel> getLoginList()
-	{
+	public void savePasswordToXML(String user, String newPassword, int flag)
+	        throws TransformerException {
+		
+		NodeList playerList = doc.getElementsByTagName("player");
+		Element playerItem = null;
+		
+		for (int i = 0; i < playerList.getLength(); i++) {
+			
+			playerItem = (Element) playerList.item(i);
+			String name = playerItem.getElementsByTagName("username").item(0)
+			        .getFirstChild().getNodeValue();
+			
+			if (name.equals(user)) {
+				Node password = playerItem.getElementsByTagName("password")
+				        .item(0).getFirstChild();
+				password.setNodeValue(newPassword);
+				
+				if (flag == 1) {
+					Node message = playerItem.getElementsByTagName("message")
+					        .item(0).getFirstChild();
+					message.setNodeValue("Ihr neues Passwort ist "
+					        + newPassword);
+				}
+			}
+		}
+		
+		transformerFactory = TransformerFactory.newInstance();
+		transformer = transformerFactory.newTransformer();
+		source = new DOMSource(doc);
+		result = new StreamResult(new File("GameData.xml"));
+		
+		transformer.transform(source, result);
+		
+		readFile();
+	}
+	
+	public Boolean getChipCount(String user) {
+		
+		NodeList playerList = doc.getElementsByTagName("player");
+		Element playerItem = null;
+		
+		for (int i = 0; i < playerList.getLength(); i++) {
+			
+			playerItem = (Element) playerList.item(i);
+			String username = playerItem.getElementsByTagName("username")
+			        .item(0).getFirstChild().getNodeValue();
+			String chipCount = playerItem.getElementsByTagName("chipcount")
+			        .item(0).getFirstChild().getNodeValue();
+			if (username.equals(user) && chipCount.equals("0"))
+				return true;
+		}
+		return false;
+	}
+	
+	public LinkedList<ListModel> getHighScoreList() {
+		LinkedList<ListModel> highScoreList = new LinkedList<ListModel>();
+		
+		highScoreList.add(0, loginList.get(0));
+		int tmp = 0;
+		
+		for (int i = 1; i < loginList.size(); i++) {
+			Boolean breaking = false;
+			for (int j = 0; j < highScoreList.size(); j++) {
+				
+				if (highScoreList.get(j).getChipcount() < loginList.get(i)
+				        .getChipcount()) {
+					highScoreList.add(j, loginList.get(i));
+					breaking = true;
+					break;
+				}
+				tmp = j;
+			}
+			if (!breaking)
+				highScoreList.add(tmp + 1, loginList.get(i));
+			
+		}
+		return highScoreList;
+	}
+	
+	// static String convertNodeToString(Node node)
+	// throws TransformerFactoryConfigurationError, TransformerException {
+	//
+	// StreamResult xmlOutput = new StreamResult(new StringWriter());
+	// Transformer transformer = TransformerFactory.newInstance()
+	// .newTransformer();
+	// transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+	// transformer.transform(new DOMSource(node), xmlOutput);
+	// return xmlOutput.getWriter().toString();
+	// }
+	
+	public LinkedList<ListModel> getLoginList() {
 		return this.loginList;
 	}
 }
