@@ -37,10 +37,11 @@ public class MenuController implements ActionListener
 				System.exit(0);
 			} else
 				if (e.getActionCommand().equals("adminControl")) {
-					String adminLogin = JOptionPane.showInputDialog(null,
-					        "Admin Login", "Admin Login",
-					        JOptionPane.OK_CANCEL_OPTION);
-					if (adminLogin.equals("admin")) {
+					JTextField password = new JPasswordField();
+					Object[] message = { "Passwort:", password };
+					int passwordDialog = JOptionPane.showConfirmDialog(null, message,
+					        "Login", JOptionPane.OK_CANCEL_OPTION);
+					if (passwordDialog == JOptionPane.OK_OPTION && password.getText().equals("admin")) {
 						
 						new AdminController();
 						this.menuView.dispose();

@@ -341,25 +341,26 @@ public class XMLController
 	
 	public LinkedList<ListModel> getHighScoreList() {
 		LinkedList<ListModel> highScoreList = new LinkedList<ListModel>();
-		
-		highScoreList.add(0, loginList.get(0));
-		int tmp = 0;
-		
-		for (int i = 1; i < loginList.size(); i++) {
-			Boolean breaking = false;
-			for (int j = 0; j < highScoreList.size(); j++) {
-				
-				if (highScoreList.get(j).getChipcount() < loginList.get(i)
-				        .getChipcount()) {
-					highScoreList.add(j, loginList.get(i));
-					breaking = true;
-					break;
-				}
-				tmp = j;
-			}
-			if (!breaking)
-				highScoreList.add(tmp + 1, loginList.get(i));
+		if (loginList.size() != 0) {
+			highScoreList.add(0, loginList.get(0));
+			int tmp = 0;
 			
+			for (int i = 1; i < loginList.size(); i++) {
+				Boolean breaking = false;
+				for (int j = 0; j < highScoreList.size(); j++) {
+					
+					if (highScoreList.get(j).getChipcount() < loginList.get(i)
+					        .getChipcount()) {
+						highScoreList.add(j, loginList.get(i));
+						breaking = true;
+						break;
+					}
+					tmp = j;
+				}
+				if (!breaking)
+					highScoreList.add(tmp + 1, loginList.get(i));
+				
+			}
 		}
 		return highScoreList;
 	}
