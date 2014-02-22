@@ -6,10 +6,12 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import Controller.HighScoreController;
+import Main.MainPage;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 
 public class HighScoreView extends JFrame
@@ -20,8 +22,9 @@ public class HighScoreView extends JFrame
 	private static final long serialVersionUID = 7575188349212040622L;
 	
 	// constructor--------------------------------
-
-	public HighScoreView(HighScoreController controller, String[] paramChipCountList, String[] paramPlayerList)
+	
+	public HighScoreView(HighScoreController controller,
+	        String[] paramChipCountList, String[] paramPlayerList)
 	{
 		setResizable(false);
 		setTitle("Highscore");
@@ -39,13 +42,36 @@ public class HighScoreView extends JFrame
 		nameArea.setFocusable(false);
 		nameArea.setEditable(false);
 		int i = 0;
-		for (i = 0; i < paramPlayerList.length; i++) 
-		{
-			nameArea.append(i + 1 + ") " + paramPlayerList[i] + "\n");
+		for (i = 0; i < paramPlayerList.length; i++) {
+			
+			if (i == 9) {
+				nameArea.append(i
+				        + 1
+				        + ")  "
+				        + paramPlayerList[i]
+				        + " ("
+				        + MainPage.xmlController
+				                .getRankFromXML(paramPlayerList[i]) + ") "
+				        + "\n");
+				i++;
+				break;
+			} else {
+				nameArea.append(i
+				        + 1
+				        + ")    "
+				        + paramPlayerList[i]
+				        + " ("
+				        + MainPage.xmlController
+				                .getRankFromXML(paramPlayerList[i]) + ") "
+				        + "\n");
+			}
 		}
-		for (i = i; i < 10; i++) 
-		{
-			nameArea.append(i + 1 + ") " + "NN" + "\n");
+		for (i = i; i < 10; i++) {
+			if (i == 9) {
+				nameArea.append(i + 1 + ")  " + "NN" + "\n");
+			} else {
+				nameArea.append(i + 1 + ")    " + "NN" + "\n");
+			}
 		}
 		nameArea.setBounds(33, 78, 141, 196);
 		getContentPane().add(nameArea);
@@ -53,9 +79,12 @@ public class HighScoreView extends JFrame
 		JTextArea chipCountArea = new JTextArea();
 		chipCountArea.setFocusable(false);
 		chipCountArea.setEditable(false);
-		int j=0;
+		int j = 0;
 		for (j = 0; j < paramChipCountList.length; j++) {
 			chipCountArea.append(paramChipCountList[j] + "\n");
+			if (j == 9) {
+				break;
+			}
 		}
 		chipCountArea.setBounds(173, 78, 89, 196);
 		getContentPane().add(chipCountArea);
@@ -65,6 +94,14 @@ public class HighScoreView extends JFrame
 		lblHighscore.setBounds(93, 0, 108, 50);
 		getContentPane().add(lblHighscore);
 		
+		JLabel lblBenutzername = new JLabel("Benutzername");
+		lblBenutzername.setBounds(33, 53, 108, 14);
+		getContentPane().add(lblBenutzername);
+		
+		JLabel lblChipcount = new JLabel("Chipcount");
+		lblChipcount.setBounds(173, 53, 89, 14);
+		getContentPane().add(lblChipcount);
+		
 		setVisible(true);
 		
 		this.centerWindow();
@@ -73,9 +110,8 @@ public class HighScoreView extends JFrame
 	
 	// methods-----------------------------------
 	
-	//TODO COMMENT
-	public void centerWindow() 
-	{
+	// TODO COMMENT
+	public void centerWindow() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
 		int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);

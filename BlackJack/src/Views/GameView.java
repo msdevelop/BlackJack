@@ -26,8 +26,9 @@ public class GameView extends JFrame
 
 	// constructor--------------------------------
 
-	public GameView(GameController controller)
+	public GameView(GameController controller, String user, String rank)
 	{
+		setTitle(user + " (" + rank + ") ");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setMinimumSize(new Dimension(4, 22));
@@ -310,6 +311,10 @@ public class GameView extends JFrame
 	public void setCardSumDealer(String sumInput)
 	{
 		cardSumDealer.setText(sumInput);
+	}
+	
+	public void setNewTitle(String paramTitle) {
+		setTitle(paramTitle);
 	}
 	
 	// get-block--------------------------------

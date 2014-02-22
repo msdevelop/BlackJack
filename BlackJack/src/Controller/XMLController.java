@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
@@ -50,7 +51,7 @@ public class XMLController
 	
 	// methods-----------------------------------
 	
-	//TODO COMMENT
+	// TODO COMMENT
 	public void initializeXMLFile() {
 		
 		File file = new File("GameData.xml");
@@ -80,7 +81,7 @@ public class XMLController
 		
 	}
 	
-	//TODO COMMENT
+	// TODO COMMENT
 	public void readFile() {
 		try {
 			
@@ -115,14 +116,13 @@ public class XMLController
 		}
 	}
 	
-	//TODO COMMENT
+	// TODO COMMENT
 	public int verifyLogin(String user, String pw) {
 		
 		NodeList playerList = doc.getElementsByTagName("player");
 		Element playerItem = null;
 		
-		for (int i = 0; i < playerList.getLength(); i++)
-		{
+		for (int i = 0; i < playerList.getLength(); i++) {
 			
 			playerItem = (Element) playerList.item(i);
 			String message = playerItem.getElementsByTagName("message").item(0)
@@ -130,23 +130,20 @@ public class XMLController
 			String name = playerItem.getElementsByTagName("username").item(0)
 			        .getFirstChild().getNodeValue();
 			
-			if (name.equals(user) && !message.equals(" ")) 
-			{
+			if (name.equals(user) && !message.equals(" ")) {
 				JOptionPane.showMessageDialog(null, message);
 				
-				Node oldMessage = playerItem.getElementsByTagName("message").item(0).getFirstChild();
+				Node oldMessage = playerItem.getElementsByTagName("message")
+				        .item(0).getFirstChild();
 				oldMessage.setNodeValue(" ");
 				
 				return -2;
 			}
 		}
 		
-		for (count = 0; count < loginList.size(); count++) 
-		{
-			if (loginList.get(count).getUsername().equals(user)) 
-			{
-				if (loginList.get(count).getPassword().equals(pw))
-				{
+		for (count = 0; count < loginList.size(); count++) {
+			if (loginList.get(count).getUsername().equals(user)) {
+				if (loginList.get(count).getPassword().equals(pw)) {
 					int chipC = loginList.get(count).getChipcount();
 					return chipC;
 				}
@@ -156,10 +153,10 @@ public class XMLController
 		return -1;
 	}
 	
-	//TODO COMMENT
-	public void addNodeToXML(String user, String pw) throws SAXException,
-	        IOException, TransformerFactoryConfigurationError,
-	        TransformerException {
+	// TODO COMMENT
+	public void addNodeToXML(String user, String pw, String playerRang)
+	        throws SAXException, IOException,
+	        TransformerFactoryConfigurationError, TransformerException {
 		
 		Boolean isInXML = false;
 		
@@ -194,8 +191,12 @@ public class XMLController
 				player.appendChild(password);
 				
 				Element chipCount = doc.createElement("chipcount");
-				chipCount.appendChild(doc.createTextNode("700"));
+				chipCount.appendChild(doc.createTextNode("200"));
 				player.appendChild(chipCount);
+				
+				Element rang = doc.createElement("rang");
+				rang.appendChild(doc.createTextNode(playerRang));
+				player.appendChild(rang);
 				
 				Element message = doc.createElement("message");
 				message.appendChild(doc.createTextNode(" "));
@@ -222,7 +223,7 @@ public class XMLController
 		}
 	}
 	
-	//TODO COMMENT
+	// TODO COMMENT
 	public void saveChipcountToXML(String user, int count)
 	        throws TransformerFactoryConfigurationError, TransformerException {
 		
@@ -255,7 +256,7 @@ public class XMLController
 		
 	}
 	
-	//TODO COMMENT
+	// TODO COMMENT
 	public void deletePlayer(String user)
 	        throws TransformerFactoryConfigurationError, TransformerException {
 		
@@ -285,7 +286,7 @@ public class XMLController
 		
 	}
 	
-	//TODO COMMENT
+	// TODO COMMENT
 	public void savePasswordToXML(String user, String newPassword, int flag)
 	        throws TransformerException {
 		
@@ -322,9 +323,56 @@ public class XMLController
 		readFile();
 	}
 	
+	public void saveNewRank(String user, String rang)
+	        throws TransformerException {
+		NodeList playerList = doc.getElementsByTagName("player");
+		Element playerItem = null;
+		
+		for (int i = 0; i < playerList.getLength(); i++) {
+			
+			playerItem = (Element) playerList.item(i);
+			String name = playerItem.getElementsByTagName("username").item(0)
+			        .getFirstChild().getNodeValue();
+			
+			if (name.equals(user)) {
+				Node rank = playerItem.getElementsByTagName("rang").item(0)
+				        .getFirstChild();
+				rank.setNodeValue(rang);
+			}
+		}
+		
+		transformerFactory = TransformerFactory.newInstance();
+		transformer = transformerFactory.newTransformer();
+		source = new DOMSource(doc);
+		result = new StreamResult(new File("GameData.xml"));
+		
+		transformer.transform(source, result);
+		
+		readFile();
+	}
+	
 	// get-block--------------------------------
 	
-	//TODO COMMENT
+	public String getRankFromXML(String user) {
+		NodeList playerList = doc.getElementsByTagName("player");
+		Element playerItem = null;
+		String rank = "";
+		
+		for (int i = 0; i < playerList.getLength(); i++) {
+			
+			playerItem = (Element) playerList.item(i);
+			String username = playerItem.getElementsByTagName("username")
+			        .item(0).getFirstChild().getNodeValue();
+			
+			if (username.equals(user)) {
+				rank = playerItem.getElementsByTagName("rang").item(0)
+				        .getFirstChild().getNodeValue();
+			}
+		}
+		return rank;
+	}
+	
+	// TODO COMMENT
 	public boolean getChipCount(String user) {
 		
 		NodeList playerList = doc.getElementsByTagName("player");
@@ -343,7 +391,7 @@ public class XMLController
 		return false;
 	}
 	
-	//TODO COMMENT
+	// TODO COMMENT
 	public LinkedList<ListModel> getHighScoreList() {
 		LinkedList<ListModel> highScoreList = new LinkedList<ListModel>();
 		if (loginList.size() != 0) {

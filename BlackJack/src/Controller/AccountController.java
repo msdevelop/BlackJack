@@ -23,7 +23,7 @@ public class AccountController implements ActionListener
 	public AccountController(String user)
 	{
 		actualUser = user;
-		accountView = new AccountView(this, user);
+		accountView = new AccountView(this, user, MainPage.xmlController.getRankFromXML(user));
 	}
 
 	// methods-----------------------------------
@@ -65,6 +65,8 @@ public class AccountController implements ActionListener
 				if (result == true)
 					try
 					{
+						MainPage.xmlController.saveNewRank(actualUser, "1");
+						accountView.setTitle(actualUser + " (" + 1 + ") ");
 						MainPage.xmlController.saveChipcountToXML(actualUser,
 								200);
 						JOptionPane
@@ -89,6 +91,28 @@ public class AccountController implements ActionListener
 				{
 					accountView.dispose();
 					new MenuController();
-				}
+				} else
+					if (e.getActionCommand().equals("delete")) {
+						int dialogResult = JOptionPane
+						        .showConfirmDialog(
+						                null,
+						                "Möchten Sie den Account wirklich endgültig löschen?",
+						                "Achtung!", JOptionPane.YES_NO_OPTION);
+						if (dialogResult == JOptionPane.YES_OPTION) {
+							try {
+								MainPage.xmlController.deletePlayer(actualUser);
+								JOptionPane.showMessageDialog(null, "Der Account wurde erfolgreich gelöscht.");
+								this.accountView.dispose();
+								new MenuController();
+							} catch (TransformerFactoryConfigurationError e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (TransformerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						
+					}
 	}
 }

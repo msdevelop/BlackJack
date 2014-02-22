@@ -19,12 +19,12 @@ public class AccountView extends JFrame
 
 	// constructor--------------------------------
     
-	public AccountView(AccountController controller, String user) 
+	public AccountView(AccountController controller, String user, String rank) 
 	{
 		setResizable(false);
-		setTitle(user);
+		setTitle(user + " (" + rank + ") ");
 		
-		setMinimumSize(new Dimension(250, 210));
+		setMinimumSize(new Dimension(250, 260));
 		getContentPane().setLayout(null);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -44,9 +44,15 @@ public class AccountView extends JFrame
 		JButton btnClose = new JButton("Abmelden");
 		btnClose.setActionCommand("close");
 		btnClose.addActionListener(controller);
-		btnClose.setBounds(10, 122, 224, 40);
+		btnClose.setBounds(10, 173, 224, 40);
 		getContentPane().add(btnClose);
 	
+		JButton btnAccountLschen = new JButton("Account l\u00F6schen");
+		btnAccountLschen.setActionCommand("delete");
+		btnAccountLschen.addActionListener(controller);
+		btnAccountLschen.setBounds(10, 122, 224, 40);
+		getContentPane().add(btnAccountLschen);
+		
 		this.centerWindow();
 	}
 	
@@ -59,5 +65,9 @@ public class AccountView extends JFrame
 	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
 	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
 	    this.setLocation(x, y);
+	}
+	
+	public void setNewTitle(String paramTitle) {
+		setTitle(paramTitle);
 	}
 }

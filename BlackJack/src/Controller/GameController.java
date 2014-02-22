@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
 import javax.xml.transform.TransformerException;
 
 import Main.MainPage;
@@ -25,7 +26,8 @@ public class GameController implements ActionListener
 	
 	public GameController(int chipC, String username)
 	{
-		this.gameView = new GameView(this);
+		this.gameView = new GameView(this, username,
+		        MainPage.xmlController.getRankFromXML(username));
 		this.gameView.setVisible(true);
 		this.gameView.setTextStatusBar("Bitte tätigen Sie ihren Wetteinsatz!");
 		this.chipCount = chipC;
@@ -38,36 +40,58 @@ public class GameController implements ActionListener
 	// button actionCommands
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("placeBet")) {
-			this.initializeGame();
+			try {
+				this.initializeGame();
+			} catch (TransformerException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		} else
 			if (e.getActionCommand().equals("hit")) {
-				this.hit();
+				try {
+					this.hit();
+				} catch (TransformerException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else
 				if (e.getActionCommand().equals("stay")) {
-					this.stay();
+					try {
+						this.stay();
+					} catch (TransformerException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				} else
 					if (e.getActionCommand().equals("playAgain")) {
 						this.resetTable();
 					} else
 						if (e.getActionCommand().equals("leaveTable")) {
-							try {
-	                            this.leaveTableToMenu();
-                            } catch (TransformerException e1) {
-	                            e1.printStackTrace();
-                            }
+							int dialogResult = JOptionPane
+							        .showConfirmDialog(
+							                null,
+							                "Möchten Sie das Spiel wirklich verlassen?",
+							                "Achtung!",
+							                JOptionPane.YES_NO_OPTION);
+							if (dialogResult == JOptionPane.YES_OPTION) {
+								try {
+									this.leaveTableToMenu();
+								} catch (TransformerException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
 						}
 	}
 	
 	// verifies bet; if true starts game
-	public void initializeGame() 
-	{
+	public void initializeGame() throws TransformerException {
 		if (this.getBetInput())
 			this.playGame();
 	}
 	
 	// game starts after bet is placed
-	public void playGame() 
-	{
+	public void playGame() throws TransformerException {
 		gameView.setTextStatusBar("Einsatz: " + playerBet + "€");
 		this.initializeCardStack();
 		this.generateStartCards();
@@ -85,8 +109,7 @@ public class GameController implements ActionListener
 	}
 	
 	// auto plays game for dealer
-	public void dealerTurn() 
-	{
+	public void dealerTurn() throws TransformerException {
 		gameView.setTextStatusBar("Dealer zieht eine Karte.");
 		this.generateNewDealerCard();
 		gameView.updateUI();
@@ -97,8 +120,7 @@ public class GameController implements ActionListener
 	}
 	
 	// player continues game with new card
-	public void hit() 
-	{
+	public void hit() throws TransformerException {
 		this.generateNewPlayerCard();
 		gameView.setTextStatusBar("Sie erhalten eine weitere Karte.");
 		gameView.updateUI();
@@ -109,32 +131,29 @@ public class GameController implements ActionListener
 	}
 	
 	// player passes turn to computer
-	public void stay() 
-	{
+	public void stay() throws TransformerException {
 		gameView.disableHitStay();
 		gameView.setTextStatusBar("Dealer ist am Zug.");
 		this.dealerTurn();
 	}
 	
 	// leave current table and return to menu
-	public void leaveTableToMenu() throws TransformerException 
-	{
+	public void leaveTableToMenu() throws TransformerException {
 		MainPage.xmlController.saveChipcountToXML(username, chipCount);
+		calculateRank(chipCount);
 		this.gameView.dispose();
 		new MenuController();
 	}
 	
 	// passes turn to computer
-	public void autoPassTurn() 
-	{
+	public void autoPassTurn() throws TransformerException {
 		gameView.disableHitStay();
 		gameView.setTextStatusBar("Sie können keine weitere Karte ziehen. Dealer ist am Zug.");
 		this.dealerTurn();
 	}
 	
 	// resets all variables to default and clears gameView
-	public void resetTable() 
-	{
+	public void resetTable() {
 		playerBet = 0;
 		playerCount = 0;
 		dealerCount = 0;
@@ -149,8 +168,7 @@ public class GameController implements ActionListener
 	}
 	
 	// initialize beginCardStack with 52 cards
-	public void initializeCardStack() 
-	{
+	public void initializeCardStack() {
 		String color = "";
 		int index = 0;
 		for (int iColor = 0; iColor < 4; iColor++) {
@@ -186,10 +204,8 @@ public class GameController implements ActionListener
 	}
 	
 	// generates random cards at gamestart
-	public void generateStartCards() 
-	{
-		for (int i = 0; i < 2; i++) 
-		{
+	public void generateStartCards() {
+		for (int i = 0; i < 2; i++) {
 			int randomPos = generateRandomNumber();
 			beginCardStack[randomPos].setCount((beginCardStack[randomPos]
 			        .getCount()) + 1);
@@ -204,26 +220,22 @@ public class GameController implements ActionListener
 	}
 	
 	// generates new card in the playerStack
-	public void generateNewPlayerCard() 
-	{
-		for (int i = 0; i < 1; i++) 
-		{
+	public void generateNewPlayerCard() {
+		for (int i = 0; i < 1; i++) {
 			int randomPos = generateRandomNumber();
-			while (beginCardStack[randomPos].getCount() >= 5) 
-			{
+			while (beginCardStack[randomPos].getCount() >= 5) {
 				randomPos = generateRandomNumber();
 			}
-			beginCardStack[randomPos].setCount((beginCardStack[randomPos].getCount()) + 1);
+			beginCardStack[randomPos].setCount((beginCardStack[randomPos]
+			        .getCount()) + 1);
 			playerStack[playerCount] = beginCardStack[randomPos];
 			playerCount++;
 		}
 	}
 	
 	// generates new card in the dealerStack
-	public void generateNewDealerCard() 
-	{
-		for (int i = 0; i < 1; i++) 
-		{
+	public void generateNewDealerCard() {
+		for (int i = 0; i < 1; i++) {
 			int randomPos = generateRandomNumber();
 			while (beginCardStack[randomPos].getCount() >= 5) {
 				randomPos = generateRandomNumber();
@@ -237,8 +249,7 @@ public class GameController implements ActionListener
 	
 	// calculates the sum of all card values in the dealerStack; links to
 	// downgradeAceDealer()
-	public void updateDealerCardSum() 
-	{
+	public void updateDealerCardSum() {
 		int cardSumDealer = 0;
 		
 		for (int i = 0; i < dealerCount; i++) {
@@ -259,8 +270,7 @@ public class GameController implements ActionListener
 	
 	// calculates the sum of all card values in the playerStack; links to
 	// downgradeAcePlayer()
-	public void updatePlayerCardSum() 
-	{
+	public void updatePlayerCardSum() {
 		int cardSumPlayer = 0;
 		
 		for (int i = 0; i < playerCount; i++) {
@@ -280,8 +290,7 @@ public class GameController implements ActionListener
 	}
 	
 	// prints player cards
-	public void printPlayerCards() 
-	{
+	public void printPlayerCards() {
 		String playerCardsOutput = "";
 		if (playerCount <= 6) {
 			for (int i = 0; i < playerCount; i++) {
@@ -308,8 +317,7 @@ public class GameController implements ActionListener
 	}
 	
 	// prints dealer cards
-	public void printDealerCards() 
-	{
+	public void printDealerCards() {
 		String dealerCardsOutput = "";
 		if (dealerCount <= 6) {
 			for (int i = 0; i < dealerCount; i++) {
@@ -336,8 +344,7 @@ public class GameController implements ActionListener
 	}
 	
 	// verifies if player is above 21 or equal to it or below
-	public int checkPlayerCardSum() 
-	{
+	public int checkPlayerCardSum() {
 		int playerCardSum = Integer.parseInt(gameView.getCardSumPlayer());
 		
 		if (playerCardSum == 21) {
@@ -352,8 +359,7 @@ public class GameController implements ActionListener
 	
 	// verifies if dealer is equal or above 17; euqal or below 16; equal or
 	// above 21
-	public int checkDealerCardSum()
-	{
+	public int checkDealerCardSum() {
 		int dealerCardSum = Integer.parseInt(gameView.getCardSumDealer());
 		
 		if (dealerCardSum == 21) {
@@ -370,8 +376,7 @@ public class GameController implements ActionListener
 	}
 	
 	// calculates who won
-	public void calculateWinner() 
-	{
+	public void calculateWinner() throws TransformerException {
 		int dealerCardSum = Integer.parseInt(gameView.getCardSumDealer());
 		int playerCardSum = Integer.parseInt(gameView.getCardSumPlayer());
 		
@@ -385,8 +390,7 @@ public class GameController implements ActionListener
 	}
 	
 	// downgrades one ace at a time in playerStack
-	public boolean downgradeAcePlayer() 
-	{
+	public boolean downgradeAcePlayer() {
 		int point = 0;
 		
 		outerloop: while (point == 0) {
@@ -407,8 +411,7 @@ public class GameController implements ActionListener
 	}
 	
 	// downgrades one ace at a time in dealerStack
-	public boolean downgradeAceDealer() 
-	{
+	public boolean downgradeAceDealer() {
 		int point = 0;
 		
 		outerloop: while (point == 0) {
@@ -429,29 +432,27 @@ public class GameController implements ActionListener
 	}
 	
 	// ends game after player loses
-	public void playerLose() 
-	{
+	public void playerLose() throws TransformerException {
 		gameView.disableHitStay();
 		gameView.enablePlayAgain();
 		gameView.setTextStatusBar("Sie haben leider verloren. Ihr Wetteinsatz wird eingezogen.");
-		if(chipCount == 0)
-		{
+		if (chipCount == 0) {
 			gameView.disablePlayAgain();
 		}
 	}
 	
 	// ends game after dealer loses
-	public void dealerLose() 
-	{
+	public void dealerLose() throws TransformerException {
 		gameView.enablePlayAgain();
 		gameView.setTextStatusBar("Sie haben gewonnen.");
-		chipCount += (playerBet * 2);
+		chipCount += (playerBet * 2 + (playerBet / 100 * Integer
+		        .parseInt(MainPage.xmlController.getRankFromXML(username))));
 		gameView.updateChipcount(chipCount);
+		calculateRank(chipCount);
 	}
 	
 	// ends game after draw
-	public void gameDraw() 
-	{
+	public void gameDraw() throws TransformerException {
 		chipCount += playerBet;
 		gameView.updateChipcount(chipCount);
 		gameView.enablePlayAgain();
@@ -459,8 +460,7 @@ public class GameController implements ActionListener
 	}
 	
 	// decides in which way the game goes on in player case
-	public void continueGamePlayer() 
-	{
+	public void continueGamePlayer() throws TransformerException {
 		if (checkPlayerCardSum() == 1)
 			gameView.setTextStatusBar("Möchten Sie noch eine Karte?");
 		else
@@ -472,8 +472,7 @@ public class GameController implements ActionListener
 	}
 	
 	// decides in which way the game goes on in dealer case
-	public void continueGameDealer() 
-	{
+	public void continueGameDealer() throws TransformerException {
 		if (checkDealerCardSum() == 0)
 			this.dealerTurn();
 		else
@@ -490,16 +489,14 @@ public class GameController implements ActionListener
 	}
 	
 	// generates random number for card selction
-	public int generateRandomNumber() 
-	{
+	public int generateRandomNumber() {
 		Random generator = new Random();
 		int randomNmbr = generator.nextInt(51);
 		return randomNmbr;
 	}
 	
 	// wait method for simulation purpose
-	public void waitTimer(int i) 
-	{
+	public void waitTimer(int i) {
 		try {
 			Thread.sleep(i);
 		} catch (InterruptedException e) {
@@ -509,8 +506,7 @@ public class GameController implements ActionListener
 	// get-block--------------------------------
 	
 	// gets the bet placed by the player
-	public boolean getBetInput() 
-	{
+	public boolean getBetInput() {
 		if (gameView.verifyBet() && (gameView.getBet()) <= chipCount) {
 			playerBet = gameView.getBet();
 			chipCount -= playerBet;
@@ -523,6 +519,29 @@ public class GameController implements ActionListener
 		} else {
 			gameView.setTextStatusBar("Ungültiger Wetteinsatz!");
 			return false;
+		}
+	}
+	
+	public void calculateRank(int count) throws TransformerException {
+		
+		// alternative logic
+		// if(chipCount >=
+		// (2^(Integer.parseInt(MainPage.xmlController.getRankFromXML(username))
+		// + 1) * 100)){
+		//
+		// }
+		
+		int rang = 0;
+		int requirement = 200;
+		
+		while (count > requirement) {
+			rang++;
+			requirement = requirement * 2;
+		}
+		if (rang > Integer.parseInt(MainPage.xmlController
+		        .getRankFromXML(username))) {
+			MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
+			gameView.setNewTitle(username + " (" + rang + ") ");
 		}
 	}
 }
