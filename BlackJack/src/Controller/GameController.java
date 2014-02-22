@@ -17,7 +17,7 @@ public class GameController implements ActionListener
 	
 	private GameView gameView;
 	private CardModel[] beginCardStack = new CardModel[52],
-	        playerStack = new CardModel[6], dealerStack = new CardModel[6];
+	        playerStack = new CardModel[26], dealerStack = new CardModel[26];
 	private int chipCount, playerBet, playerCount = 0, dealerCount = 0;
 	private String username;
 	
@@ -132,8 +132,8 @@ public class GameController implements ActionListener
 		playerCount = 0;
 		dealerCount = 0;
 		beginCardStack = new CardModel[52];
-		playerStack = new CardModel[6];
-		dealerStack = new CardModel[6];
+		playerStack = new CardModel[26];
+		dealerStack = new CardModel[26];
 		gameView.enableBtnSetBet();
 		gameView.enableBetInput();
 		gameView.disablePlayAgain();
@@ -195,13 +195,14 @@ public class GameController implements ActionListener
 	
 	// generates new card in the playerStack
 	public void generateNewPlayerCard() {
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 1; i++) 
+		{
 			int randomPos = generateRandomNumber();
-			while (beginCardStack[randomPos].getCount() >= 5) {
+			while (beginCardStack[randomPos].getCount() >= 5) 
+			{
 				randomPos = generateRandomNumber();
 			}
-			beginCardStack[randomPos].setCount((beginCardStack[randomPos]
-			        .getCount()) + 1);
+			beginCardStack[randomPos].setCount((beginCardStack[randomPos].getCount()) + 1);
 			playerStack[playerCount] = beginCardStack[randomPos];
 			playerCount++;
 		}
@@ -209,7 +210,8 @@ public class GameController implements ActionListener
 	
 	// generates new card in the dealerStack
 	public void generateNewDealerCard() {
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 1; i++) 
+		{
 			int randomPos = generateRandomNumber();
 			while (beginCardStack[randomPos].getCount() >= 5) {
 				randomPos = generateRandomNumber();
@@ -410,6 +412,10 @@ public class GameController implements ActionListener
 		gameView.disableHitStay();
 		gameView.enablePlayAgain();
 		gameView.setTextStatusBar("Sie haben leider verloren. Ihr Wetteinsatz wird eingezogen.");
+		if(chipCount == 0)
+		{
+			gameView.disablePlayAgain();
+		}
 	}
 	
 	// ends game after dealer loses

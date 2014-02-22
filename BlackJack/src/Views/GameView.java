@@ -42,18 +42,18 @@ public class GameView extends JFrame
 		lblChipcount.setBounds(26, 57, 72, 14);
 		getContentPane().add(lblChipcount);
 
-		JLabel lblEinsatz = new JLabel("Bet:");
-		lblEinsatz.setBounds(26, 120, 59, 14);
+		JLabel lblEinsatz = new JLabel("Wetteinsatz:");
+		lblEinsatz.setBounds(26, 120, 72, 14);
 		getContentPane().add(lblEinsatz);
 
-		btnPlaceBet = new JButton("Place Bet");
+		btnPlaceBet = new JButton("Place bet");
 		btnPlaceBet.setBounds(159, 171, 89, 23);
 		btnPlaceBet.setActionCommand("placeBet");
 		btnPlaceBet.addActionListener(controller);
 		getContentPane().add(btnPlaceBet);
 
-		btnLeaveTable = new JButton("Leave table");
-		btnLeaveTable.setBounds(10, 218, 238, 23);
+		btnLeaveTable = new JButton("Abmelden");
+		btnLeaveTable.setBounds(9, 443, 239, 23);
 		btnLeaveTable.setActionCommand("leaveTable");
 		btnLeaveTable.addActionListener(controller);
 		getContentPane().add(btnLeaveTable);
@@ -107,7 +107,7 @@ public class GameView extends JFrame
 		betStatus.setEditable(false);
 		getContentPane().add(betStatus);
 
-		JLabel lblBetPlaced = new JLabel("Bet placed:");
+		JLabel lblBetPlaced = new JLabel("Wetteinsatz:");
 		lblBetPlaced.setBounds(26, 285, 72, 14);
 		getContentPane().add(lblBetPlaced);
 
@@ -153,11 +153,11 @@ public class GameView extends JFrame
 		separator_3.setBounds(0, 265, 266, 2);
 		getContentPane().add(separator_3);
 		
-		btnPlayAgain = new JButton("Play again");
+		btnPlayAgain = new JButton("Neues Spiel");
 		btnPlayAgain.setEnabled(false);
 		btnPlayAgain.setActionCommand("playAgain");
 		btnPlayAgain.addActionListener(controller);
-		btnPlayAgain.setBounds(9, 443, 239, 23);
+		btnPlayAgain.setBounds(10, 218, 238, 23);
 		getContentPane().add(btnPlayAgain);
 		
 		this.centerWindow();

@@ -46,7 +46,7 @@ public class LoginController implements ActionListener
 	           	}
 	           	else
 	           	{
-	           		JOptionPane.showMessageDialog(null, "Username und Passwort dürfen nicht länger als 10 und nicht kürzer als 4 Zeichen sein.");
+	           		JOptionPane.showMessageDialog(null, "Benutzername und Passwort dürfen nicht länger als 10 und nicht kürzer als 4 Zeichen sein!");
 	           	}
             } 
 			catch (TransformerFactoryConfigurationError e1)
@@ -74,26 +74,21 @@ public class LoginController implements ActionListener
 		
 		int verify = MainPage.xmlController.verifyLogin(username, password);
 		
-		if (verify != -1) 
+		if (verify != -1 && verify != -2) 
 		{
 			if(verify > 0)
 			{
 				new GameController(verify, username);
 				this.loginView.dispose();
 			}
-			else if(username.equals("Admin"))
-			{
-				new GameController(verify, username);
-				this.loginView.dispose();
-			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, "chipcount empty");
+				JOptionPane.showMessageDialog(null, "Sie haben nicht genügend Chips!");
 			}
 		}
-		else 
+		else if(verify == -1)
 		{
-			JOptionPane.showMessageDialog(null, "wrong login input");
+			JOptionPane.showMessageDialog(null, "Benutzername oder Passwort falsch!");
 		}
 	}
 	

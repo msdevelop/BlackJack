@@ -57,7 +57,7 @@ public class MenuView extends JFrame
 		btnAccountControl.setBounds(10, 156, 194, 34);
 		getContentPane().add(btnAccountControl);
 		
-		JButton btnHighScores = new JButton("Highscores");
+		JButton btnHighScores = new JButton("Highscore");
 		btnHighScores.setActionCommand("highScores");
 		btnHighScores.addActionListener(controller);
 		btnHighScores.setBounds(10, 108, 194, 37);

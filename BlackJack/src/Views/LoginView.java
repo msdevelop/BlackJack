@@ -26,42 +26,42 @@ public class LoginView extends JFrame
 	{
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
-		setMinimumSize(new Dimension(360, 210));
+		setMinimumSize(new Dimension(370, 180));
 		getContentPane().setLayout(null);
 		
 		username = new JTextField();
-		username.setBounds(116, 21, 86, 20);
+		username.setBounds(137, 21, 86, 20);
 		getContentPane().add(username);
 		username.setColumns(10);
 		
-		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(31, 24, 75, 14);
+		JLabel lblUsername = new JLabel("Benutzername:");
+		lblUsername.setBounds(31, 24, 96, 14);
 		getContentPane().add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(31, 74, 75, 14);
+		JLabel lblPassword = new JLabel("Passwort:");
+		lblPassword.setBounds(31, 68, 75, 14);
 		getContentPane().add(lblPassword);
 		
-		JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton("Einloggen");
 		btnLogin.setActionCommand("login");
 		btnLogin.addActionListener(controller);
-		btnLogin.setBounds(227, 21, 86, 70);
+		btnLogin.setBounds(248, 21, 96, 61);
 		getContentPane().add(btnLogin);
 		
-		JButton btnCreateNewProfile = new JButton("Create new profile");
+		JButton btnCreateNewProfile = new JButton("Neues Profil erstellen");
 		btnCreateNewProfile.setActionCommand("createNewProfile");
 		btnCreateNewProfile.addActionListener(controller);
-		btnCreateNewProfile.setBounds(31, 116, 171, 32);
+		btnCreateNewProfile.setBounds(31, 104, 171, 32);
 		getContentPane().add(btnCreateNewProfile);
 		
-		JButton btnExit = new JButton("Exit");
+		JButton btnExit = new JButton("Zur\u00FCck");
 		btnExit.setActionCommand("exit");
 		btnExit.addActionListener(controller);
-		btnExit.setBounds(227, 116, 86, 32);
+		btnExit.setBounds(248, 104, 96, 32);
 		getContentPane().add(btnExit);
 		
 		password = new JPasswordField();
-		password.setBounds(116, 71, 86, 20);
+		password.setBounds(137, 62, 86, 20);
 		getContentPane().add(password);
 		
 		this.centerWindow();

@@ -51,17 +51,20 @@ public class MenuController implements ActionListener
 											
 						JTextField userName = new JTextField();
 						JTextField password = new JPasswordField();
-						Object[] message = { "Username:", userName,
+						Object[] message = { "Benutzername:", userName,
 						        "Password:", password };
 						int passwordDialog = JOptionPane.showConfirmDialog(null,
 						        message, "Login", JOptionPane.OK_CANCEL_OPTION);
 						if (passwordDialog == JOptionPane.OK_OPTION) {
 							int verified = MainPage.xmlController.verifyLogin(userName.getText(), password.getText());
-						    if (verified != -1) {
+						    if (verified != -1 && verified != -2)
+						    {
 						    	 new AccountController(userName.getText());
 								 this.menuView.dispose();
-						    } else {
-						    	JOptionPane.showMessageDialog(null, "wrong login input");  
+						    } 
+						    else if(verified == -1)
+						    {
+						    	JOptionPane.showMessageDialog(null, "Benutzername oder Passwort falsch!");  
 						    }
 						}
 						

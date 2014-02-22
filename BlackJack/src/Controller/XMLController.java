@@ -61,21 +61,6 @@ public class XMLController
 				Element root = doc.createElement("list");
 				doc.appendChild(root);
 				
-				// Element player = doc.createElement("player");
-				// root.appendChild(player);
-				
-				// Element username = doc.createElement("username");
-				// username.appendChild(doc.createTextNode("Admin"));
-				// player.appendChild(username);
-				//
-				// Element password = doc.createElement("password");
-				// password.appendChild(doc.createTextNode("admin"));
-				// player.appendChild(password);
-				//
-				// Element chipCount = doc.createElement("chipcount");
-				// chipCount.appendChild(doc.createTextNode("0"));
-				// player.appendChild(chipCount);
-				
 				transformerFactory = TransformerFactory.newInstance();
 				transformer = transformerFactory.newTransformer();
 				source = new DOMSource(doc);
@@ -130,7 +115,8 @@ public class XMLController
 		NodeList playerList = doc.getElementsByTagName("player");
 		Element playerItem = null;
 		
-		for (int i = 0; i < playerList.getLength(); i++) {
+		for (int i = 0; i < playerList.getLength(); i++)
+		{
 			
 			playerItem = (Element) playerList.item(i);
 			String message = playerItem.getElementsByTagName("message").item(0)
@@ -138,18 +124,23 @@ public class XMLController
 			String name = playerItem.getElementsByTagName("username").item(0)
 			        .getFirstChild().getNodeValue();
 			
-			if (name.equals(user) && !message.equals(" ")) {
+			if (name.equals(user) && !message.equals(" ")) 
+			{
 				JOptionPane.showMessageDialog(null, message);
 				
-				Node oldMessage = playerItem.getElementsByTagName("message")
-				        .item(0).getFirstChild();
+				Node oldMessage = playerItem.getElementsByTagName("message").item(0).getFirstChild();
 				oldMessage.setNodeValue(" ");
+				
+				return -2;
 			}
 		}
 		
-		for (count = 0; count < loginList.size(); count++) {
-			if (loginList.get(count).getUsername().equals(user)) {
-				if (loginList.get(count).getPassword().equals(pw)) {
+		for (count = 0; count < loginList.size(); count++) 
+		{
+			if (loginList.get(count).getUsername().equals(user)) 
+			{
+				if (loginList.get(count).getPassword().equals(pw))
+				{
 					int chipC = loginList.get(count).getChipcount();
 					return chipC;
 				}
@@ -211,7 +202,7 @@ public class XMLController
 				transformer.transform(source, result);
 				
 				JOptionPane.showMessageDialog(null,
-				        "Ihr Account wurde erfolgreich erstellt!.");
+				        "Ihr Account wurde erfolgreich erstellt!");
 				
 				readFile();
 				
@@ -220,7 +211,7 @@ public class XMLController
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,
-			        "Bitte wählen Sie einen anderen Benutzernamen.");
+			        "Bitte wählen Sie einen anderen Benutzernamen!");
 		}
 	}
 	
@@ -305,7 +296,7 @@ public class XMLController
 				if (flag == 1) {
 					Node message = playerItem.getElementsByTagName("message")
 					        .item(0).getFirstChild();
-					message.setNodeValue("Ihr neues Passwort ist "
+					message.setNodeValue("Ihr Passwort wurde zurückgesetzt. Ihr neues Passwort ist "
 					        + newPassword);
 				}
 			}
@@ -364,17 +355,6 @@ public class XMLController
 		}
 		return highScoreList;
 	}
-	
-	// static String convertNodeToString(Node node)
-	// throws TransformerFactoryConfigurationError, TransformerException {
-	//
-	// StreamResult xmlOutput = new StreamResult(new StringWriter());
-	// Transformer transformer = TransformerFactory.newInstance()
-	// .newTransformer();
-	// transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-	// transformer.transform(new DOMSource(node), xmlOutput);
-	// return xmlOutput.getWriter().toString();
-	// }
 	
 	public LinkedList<ListModel> getLoginList() {
 		return this.loginList;
