@@ -61,14 +61,14 @@ public class AccountController implements ActionListener
 			if (e.getActionCommand().equals("newChips"))
 			{
 				Boolean result = MainPage.xmlController
-						.getChipCount(actualUser);
+						.verifyChipCount(actualUser);
 				if (result == true)
 					try
 					{
 						MainPage.xmlController.saveNewRank(actualUser, "1");
 						accountView.setTitle(actualUser + " (" + 1 + ") ");
 						MainPage.xmlController.saveChipcountToXML(actualUser,
-								200);
+								100);
 						JOptionPane
 								.showMessageDialog(null,
 										"Ihnen wurden erfolgreich neue Chips zugeteilt.");
@@ -105,10 +105,8 @@ public class AccountController implements ActionListener
 								this.accountView.dispose();
 								new MenuController();
 							} catch (TransformerFactoryConfigurationError e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							} catch (TransformerException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}

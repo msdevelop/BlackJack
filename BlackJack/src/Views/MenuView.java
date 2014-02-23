@@ -72,7 +72,7 @@ public class MenuView extends JFrame
 	
 	// methods-----------------------------------
 	
-	//TODO COMMENT
+	// centers the window relative to the screen resolution
 	public void centerWindow()
 	{
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

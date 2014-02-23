@@ -43,7 +43,6 @@ public class GameController implements ActionListener
 			try {
 				this.initializeGame();
 			} catch (TransformerException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} else
@@ -51,7 +50,6 @@ public class GameController implements ActionListener
 				try {
 					this.hit();
 				} catch (TransformerException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			} else
@@ -59,7 +57,6 @@ public class GameController implements ActionListener
 					try {
 						this.stay();
 					} catch (TransformerException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} else
@@ -77,7 +74,6 @@ public class GameController implements ActionListener
 								try {
 									this.leaveTableToMenu();
 								} catch (TransformerException e1) {
-									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 							}
@@ -140,7 +136,6 @@ public class GameController implements ActionListener
 	// leave current table and return to menu
 	public void leaveTableToMenu() throws TransformerException {
 		MainPage.xmlController.saveChipcountToXML(username, chipCount);
-		calculateRank(chipCount);
 		this.gameView.dispose();
 		new MenuController();
 	}
@@ -444,9 +439,12 @@ public class GameController implements ActionListener
 	// ends game after dealer loses
 	public void dealerLose() throws TransformerException {
 		gameView.enablePlayAgain();
-		gameView.setTextStatusBar("Sie haben gewonnen.");
-		chipCount += (playerBet * 2 + (playerBet / 100 * Integer
-		        .parseInt(MainPage.xmlController.getRankFromXML(username))));
+		int reward = (playerBet * 2 + (playerBet / 100 * Integer.parseInt(MainPage.xmlController.getRankFromXML(username))));
+		gameView.setTextStatusBar("Sie haben gewonnen. Gewinn wird ausgezahlt.");
+		gameView.updateUI();
+		this.waitTimer(2000);
+		gameView.setTextStatusBar("Ihrem Konto wurden " + reward + " € gutgeschrieben!");
+		chipCount += reward;
 		gameView.updateChipcount(chipCount);
 		calculateRank(chipCount);
 	}
@@ -456,7 +454,7 @@ public class GameController implements ActionListener
 		chipCount += playerBet;
 		gameView.updateChipcount(chipCount);
 		gameView.enablePlayAgain();
-		gameView.setTextStatusBar("Das Spiel endet unentschieden.");
+		gameView.setTextStatusBar("Das Spiel endet unentschieden. Sie erhalten ihren Einsatz zurück!");
 	}
 	
 	// decides in which way the game goes on in player case
@@ -488,6 +486,42 @@ public class GameController implements ActionListener
 					this.calculateWinner();
 	}
 	
+	// calculates the playerRank depending on his current chipcount
+	public void calculateRank(int count) throws TransformerException {
+		
+		int lvlUp = 0;
+		while(chipCount >=	(Math.pow(2, ((Integer.parseInt(MainPage.xmlController.getRankFromXML(username))) + 1))) * 100)
+		{
+			int rang = Integer.parseInt(MainPage.xmlController.getRankFromXML(username));
+			
+			MainPage.xmlController.saveNewRank(username, Integer.toString(rang + 1));
+			gameView.setNewTitle(username + " (" + (rang + 1) + ") ");
+			
+			lvlUp++;
+		}
+		
+		if(lvlUp != 0)
+		{
+			JOptionPane.showMessageDialog(null, "Sie sind " + lvlUp + " Level aufgestiegen!");
+		}
+		
+
+//alternative logic
+		 
+//		int rang = 0;
+//		int requirement = 200;
+//		
+//		while (count > requirement) {
+//			rang++;
+//			requirement = requirement * 2;
+//		}
+//		if (rang > Integer.parseInt(MainPage.xmlController
+//		        .getRankFromXML(username))) {
+//			MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
+//			gameView.setNewTitle(username + " (" + rang + ") ");
+//		}
+	}
+	
 	// generates random number for card selction
 	public int generateRandomNumber() {
 		Random generator = new Random();
@@ -512,6 +546,7 @@ public class GameController implements ActionListener
 			chipCount -= playerBet;
 			gameView.updateChipcount(chipCount);
 			gameView.setBetStatus(Integer.toString(playerBet));
+			gameView.setTextBetInput("");
 			gameView.disableBtnSetBet();
 			gameView.disableBetInput();
 			
@@ -519,29 +554,6 @@ public class GameController implements ActionListener
 		} else {
 			gameView.setTextStatusBar("Ungültiger Wetteinsatz!");
 			return false;
-		}
-	}
-	
-	public void calculateRank(int count) throws TransformerException {
-		
-		// alternative logic
-		// if(chipCount >=
-		// (2^(Integer.parseInt(MainPage.xmlController.getRankFromXML(username))
-		// + 1) * 100)){
-		//
-		// }
-		
-		int rang = 0;
-		int requirement = 200;
-		
-		while (count > requirement) {
-			rang++;
-			requirement = requirement * 2;
-		}
-		if (rang > Integer.parseInt(MainPage.xmlController
-		        .getRankFromXML(username))) {
-			MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
-			gameView.setNewTitle(username + " (" + rang + ") ");
 		}
 	}
 }

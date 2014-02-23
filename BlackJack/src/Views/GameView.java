@@ -191,7 +191,7 @@ public class GameView extends JFrame
 		this.update(getGraphics());
 	}
 
-	//TODO COMMENT
+	// centers the window relative to the screen resolution
 	public void centerWindow()
 	{
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -202,7 +202,7 @@ public class GameView extends JFrame
 	
 	// set-block--------------------------------
 	
-	//TODO COMMENT
+	// updates the textfield chipcountStatus with the new chipcount
 	public void updateChipcount(int chipC)
 	{
 		String chipCount = Integer.toString(chipC);
@@ -239,10 +239,16 @@ public class GameView extends JFrame
 		btnPlaceBet.setEnabled(true);
 	}	
 
-	// disables textfield betInpu
+	// disables textfield betInput
 	public void disableBetInput()
 	{
 		betInput.setEnabled(false);
+	}
+	
+	// displays given text in the textfield betInput
+	public void setTextBetInput(String paramText)
+	{
+		betInput.setText(paramText);
 	}
 	
 	// enables textfield betInpu

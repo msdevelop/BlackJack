@@ -84,11 +84,15 @@ public class AdminView extends JFrame
 		getContentPane().add(lblAdminverwaltung);
 		
 		propUsername = new JTextField();
+		propUsername.setEditable(false);
+		propUsername.setFocusable(false);
 		propUsername.setBounds(149, 286, 130, 20);
 		getContentPane().add(propUsername);
 		propUsername.setColumns(10);
 		
 		propChipcount = new JTextField();
+		propChipcount.setFocusable(false);
+		propChipcount.setEditable(false);
 		propChipcount.setBounds(149, 319, 130, 20);
 		getContentPane().add(propChipcount);
 		propChipcount.setColumns(10);
@@ -98,7 +102,7 @@ public class AdminView extends JFrame
 	
 	// methods-----------------------------------
 	
-	//TODO COMMENT
+	// centers the window relative to the screen resolution
 	public void centerWindow()
 	{
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -119,6 +123,7 @@ public class AdminView extends JFrame
 		this.propChipcount.setText(Integer.toString(paramChipcount));
 	}
 	
+	// replaces the userList after a change
 	public void updateUserList(String[] paramPlayerArrayList)
 	{
 		userList = new JList(paramPlayerArrayList);

@@ -58,7 +58,7 @@ public class AccountView extends JFrame
 	
 	// methods-----------------------------------
 	
-	//TODO COMMENT
+	//centers the window relative to the screen resolution
 	public void centerWindow()
 	{
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -67,6 +67,9 @@ public class AccountView extends JFrame
 	    this.setLocation(x, y);
 	}
 	
+	// set-block--------------------------------
+	
+	// changes the windows title
 	public void setNewTitle(String paramTitle) {
 		setTitle(paramTitle);
 	}

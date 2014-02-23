@@ -9,7 +9,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
@@ -51,7 +50,7 @@ public class XMLController
 	
 	// methods-----------------------------------
 	
-	// TODO COMMENT
+	// verifies if GameData.xml is already existent; if not creates it empty
 	public void initializeXMLFile() {
 		
 		File file = new File("GameData.xml");
@@ -81,7 +80,7 @@ public class XMLController
 		
 	}
 	
-	// TODO COMMENT
+	// reads the GameData.xml into a LinkedList
 	public void readFile() {
 		try {
 			
@@ -116,7 +115,7 @@ public class XMLController
 		}
 	}
 	
-	// TODO COMMENT
+	// verifies if the given username and password combination is valid
 	public int verifyLogin(String user, String pw) {
 		
 		NodeList playerList = doc.getElementsByTagName("player");
@@ -153,7 +152,7 @@ public class XMLController
 		return -1;
 	}
 	
-	// TODO COMMENT
+	// creates new userNode in the XML
 	public void addNodeToXML(String user, String pw, String playerRang)
 	        throws SAXException, IOException,
 	        TransformerFactoryConfigurationError, TransformerException {
@@ -223,7 +222,7 @@ public class XMLController
 		}
 	}
 	
-	// TODO COMMENT
+	// saves new chipcount to the given users position
 	public void saveChipcountToXML(String user, int count)
 	        throws TransformerFactoryConfigurationError, TransformerException {
 		
@@ -256,7 +255,7 @@ public class XMLController
 		
 	}
 	
-	// TODO COMMENT
+	// deletes given user from the XML
 	public void deletePlayer(String user)
 	        throws TransformerFactoryConfigurationError, TransformerException {
 		
@@ -286,7 +285,8 @@ public class XMLController
 		
 	}
 	
-	// TODO COMMENT
+	// saves a password to the given users posotion
+	// saves a message to the given users position
 	public void savePasswordToXML(String user, String newPassword, int flag)
 	        throws TransformerException {
 		
@@ -323,6 +323,7 @@ public class XMLController
 		readFile();
 	}
 	
+	// saves a new rank to the given players position
 	public void saveNewRank(String user, String rang)
 	        throws TransformerException {
 		NodeList playerList = doc.getElementsByTagName("player");
@@ -351,8 +352,28 @@ public class XMLController
 		readFile();
 	}
 	
+	// verifies if the users chipcount is 0 or !=
+	public boolean verifyChipCount(String user) {
+		
+		NodeList playerList = doc.getElementsByTagName("player");
+		Element playerItem = null;
+		
+		for (int i = 0; i < playerList.getLength(); i++) {
+			
+			playerItem = (Element) playerList.item(i);
+			String username = playerItem.getElementsByTagName("username")
+			        .item(0).getFirstChild().getNodeValue();
+			String chipCount = playerItem.getElementsByTagName("chipcount")
+			        .item(0).getFirstChild().getNodeValue();
+			if (username.equals(user) && chipCount.equals("0"))
+				return true;
+		}
+		return false;
+	}
+	
 	// get-block--------------------------------
 	
+	// returns the rank of a given user
 	public String getRankFromXML(String user) {
 		NodeList playerList = doc.getElementsByTagName("player");
 		Element playerItem = null;
@@ -372,26 +393,7 @@ public class XMLController
 		return rank;
 	}
 	
-	// TODO COMMENT
-	public boolean getChipCount(String user) {
-		
-		NodeList playerList = doc.getElementsByTagName("player");
-		Element playerItem = null;
-		
-		for (int i = 0; i < playerList.getLength(); i++) {
-			
-			playerItem = (Element) playerList.item(i);
-			String username = playerItem.getElementsByTagName("username")
-			        .item(0).getFirstChild().getNodeValue();
-			String chipCount = playerItem.getElementsByTagName("chipcount")
-			        .item(0).getFirstChild().getNodeValue();
-			if (username.equals(user) && chipCount.equals("0"))
-				return true;
-		}
-		return false;
-	}
-	
-	// TODO COMMENT
+	// returns the best 10 players as LinkedList
 	public LinkedList<ListModel> getHighScoreList() {
 		LinkedList<ListModel> highScoreList = new LinkedList<ListModel>();
 		if (loginList.size() != 0) {
@@ -399,11 +401,10 @@ public class XMLController
 			int tmp = 0;
 			
 			for (int i = 1; i < loginList.size(); i++) {
-				Boolean breaking = false;
+				boolean breaking = false;
 				for (int j = 0; j < highScoreList.size(); j++) {
 					
-					if (highScoreList.get(j).getChipcount() < loginList.get(i)
-					        .getChipcount()) {
+					if (highScoreList.get(j).getChipcount() < loginList.get(i).getChipcount()) {
 						highScoreList.add(j, loginList.get(i));
 						breaking = true;
 						break;

@@ -40,17 +40,16 @@ public class HighScoreController implements ActionListener
 		
 	}
 	
-	//TODO COMMENT
+	// generates an array with all chipcount values
 	public void createChipCountList(LinkedList<ListModel> list) {
 		chipCountList = new String[list.size()];
 		
-		for (int i = 0; i < list.size(); i++) {
-			Integer tmp = list.get(i).getChipcount();
-			chipCountList[i] = tmp.toString();
+		for (int i = 0; i < list.size(); i++) {			
+			chipCountList[i] = Integer.toString(list.get(i).getChipcount());
 		}
 	}
 	
-	//TODO COMMENT
+	//generates an array with all player names
 	public void createPlayerList(LinkedList<ListModel> list) {
 		playerList = new String[list.size()];
 		

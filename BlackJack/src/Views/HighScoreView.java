@@ -110,7 +110,7 @@ public class HighScoreView extends JFrame
 	
 	// methods-----------------------------------
 	
-	// TODO COMMENT
+	// centers the window relative to the screen resolution
 	public void centerWindow() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);

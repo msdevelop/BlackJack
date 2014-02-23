@@ -92,14 +92,13 @@ public class AdminController implements ActionListener
 								                "Das Passwort wurde erfolgreich zurückgesetzt.");
 							}
 						} catch (TransformerException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 			}
 		}
 	}
 	
-	//TODO COMMENT
+	//shows the selected users username and the chipcount
 	public void showProperties()
 	{
 		int index = adminView.getSelectedItem();
@@ -109,7 +108,7 @@ public class AdminController implements ActionListener
 				.setPropChipcount(this.userList.get(index).getChipcount());
 	}
 
-	//TODO COMMENT
+	//replaces the selected users password with a random 5 digit number
 	public void resetPassword() throws TransformerException
 	{
 		int index = adminView.getSelectedItem();
@@ -124,7 +123,7 @@ public class AdminController implements ActionListener
 	
 	// set-block--------------------------------
 
-	//TODO COMMENT
+	//generates an array with all users usernames
 	public void setPlayerArrayList()
 	{
 
@@ -138,7 +137,7 @@ public class AdminController implements ActionListener
 
 	// get-block--------------------------------
 	
-	//TODO COMMENT
+	//returns the username of the selected item
 	public String getPlayerFromList()
 	{
 		int index = adminView.getSelectedItem();
