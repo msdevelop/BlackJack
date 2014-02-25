@@ -152,6 +152,25 @@ public class XMLController
 		return -1;
 	}
 	
+	public int calculateTargetForNextRank(String user) {
+		int rank = Integer.parseInt(getRankFromXML(user));
+		return (int) ((Math.pow(2, rank + 1)) * 100);
+	}
+	
+	public int calculateDifferenceToNextrank(String user, int target) {
+		return target - getChipcount(user);
+	}
+	
+	// returns the chipcount of a player
+	public int getChipcount(String user) {
+		for (count = 0; count < loginList.size(); count++) {
+			if (loginList.get(count).getUsername().equals(user)) {
+				return loginList.get(count).getChipcount();
+			}
+		}
+		return -1;
+	}
+	
 	// creates new userNode in the XML
 	public void addNodeToXML(String user, String pw, String playerRang)
 	        throws SAXException, IOException,
@@ -404,7 +423,8 @@ public class XMLController
 				boolean breaking = false;
 				for (int j = 0; j < highScoreList.size(); j++) {
 					
-					if (highScoreList.get(j).getChipcount() < loginList.get(i).getChipcount()) {
+					if (highScoreList.get(j).getChipcount() < loginList.get(i)
+					        .getChipcount()) {
 						highScoreList.add(j, loginList.get(i));
 						breaking = true;
 						break;

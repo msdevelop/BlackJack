@@ -69,6 +69,7 @@ public class AccountController implements ActionListener
 						accountView.setTitle(actualUser + " (" + 1 + ") ");
 						MainPage.xmlController.saveChipcountToXML(actualUser,
 								100);
+						this.accountView.updateView(actualUser);
 						JOptionPane
 								.showMessageDialog(null,
 										"Ihnen wurden erfolgreich neue Chips zugeteilt.");

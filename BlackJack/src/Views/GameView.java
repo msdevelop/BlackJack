@@ -7,6 +7,7 @@ import Controller.GameController;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -48,7 +49,7 @@ public class GameView extends JFrame
 		lblEinsatz.setBounds(26, 120, 72, 14);
 		getContentPane().add(lblEinsatz);
 
-		btnPlaceBet = new JButton("Place bet");
+		btnPlaceBet = new JButton("Place Bet");
 		btnPlaceBet.setBounds(159, 171, 89, 23);
 		btnPlaceBet.setActionCommand("placeBet");
 		btnPlaceBet.addActionListener(controller);
@@ -161,6 +162,12 @@ public class GameView extends JFrame
 		btnPlayAgain.addActionListener(controller);
 		btnPlayAgain.setBounds(10, 218, 238, 23);
 		getContentPane().add(btnPlayAgain);
+		
+		JButton btnInfo = new JButton("Info");
+		btnInfo.setActionCommand("info");
+		btnInfo.addActionListener(controller);
+		btnInfo.setBounds(650, 468, 89, 23);
+		getContentPane().add(btnInfo);
 		
 		this.centerWindow();
 	}

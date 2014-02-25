@@ -77,7 +77,22 @@ public class GameController implements ActionListener
 									e1.printStackTrace();
 								}
 							}
-						}
+						} else
+							if (e.getActionCommand().equals("info")) {
+								JOptionPane
+								        .showMessageDialog(
+								                null,
+								                "Sie erreichen das nächste Level bei "
+								                        + MainPage.xmlController
+								                                .calculateTargetForNextRank(username)
+								                        + " Chips. \nSie benötigen noch "
+								                        + MainPage.xmlController
+								                                .calculateDifferenceToNextrank(
+								                                        username,
+								                                        MainPage.xmlController
+								                                                .calculateTargetForNextRank(username))
+								                        + " Chips bis zur nächsten Stufe.");
+							}
 	}
 	
 	// verifies bet; if true starts game
@@ -439,11 +454,13 @@ public class GameController implements ActionListener
 	// ends game after dealer loses
 	public void dealerLose() throws TransformerException {
 		gameView.enablePlayAgain();
-		int reward = (playerBet * 2 + (playerBet / 100 * Integer.parseInt(MainPage.xmlController.getRankFromXML(username))));
+		int reward = (playerBet * 2 + (playerBet / 100 * Integer
+		        .parseInt(MainPage.xmlController.getRankFromXML(username))));
 		gameView.setTextStatusBar("Sie haben gewonnen. Gewinn wird ausgezahlt.");
 		gameView.updateUI();
 		this.waitTimer(2000);
-		gameView.setTextStatusBar("Ihrem Konto wurden " + reward + " € gutgeschrieben!");
+		gameView.setTextStatusBar("Ihrem Konto wurden " + reward
+		        + " € gutgeschrieben!");
 		chipCount += reward;
 		gameView.updateChipcount(chipCount);
 		calculateRank(chipCount);
@@ -490,36 +507,38 @@ public class GameController implements ActionListener
 	public void calculateRank(int count) throws TransformerException {
 		
 		int lvlUp = 0;
-		while(chipCount >=	(Math.pow(2, ((Integer.parseInt(MainPage.xmlController.getRankFromXML(username))) + 1))) * 100)
-		{
-			int rang = Integer.parseInt(MainPage.xmlController.getRankFromXML(username));
+		while (chipCount >= (Math.pow(2,
+		        ((Integer.parseInt(MainPage.xmlController
+		                .getRankFromXML(username))) + 1))) * 100) {
+			int rang = Integer.parseInt(MainPage.xmlController
+			        .getRankFromXML(username));
 			
-			MainPage.xmlController.saveNewRank(username, Integer.toString(rang + 1));
+			MainPage.xmlController.saveNewRank(username,
+			        Integer.toString(rang + 1));
 			gameView.setNewTitle(username + " (" + (rang + 1) + ") ");
 			
 			lvlUp++;
 		}
 		
-		if(lvlUp != 0)
-		{
-			JOptionPane.showMessageDialog(null, "Sie sind " + lvlUp + " Level aufgestiegen!");
+		if (lvlUp != 0) {
+			JOptionPane.showMessageDialog(null, "Sie sind " + lvlUp
+			        + " Level aufgestiegen!");
 		}
 		
-
-//alternative logic
-		 
-//		int rang = 0;
-//		int requirement = 200;
-//		
-//		while (count > requirement) {
-//			rang++;
-//			requirement = requirement * 2;
-//		}
-//		if (rang > Integer.parseInt(MainPage.xmlController
-//		        .getRankFromXML(username))) {
-//			MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
-//			gameView.setNewTitle(username + " (" + rang + ") ");
-//		}
+		// alternative logic
+		
+		// int rang = 0;
+		// int requirement = 200;
+		//
+		// while (count > requirement) {
+		// rang++;
+		// requirement = requirement * 2;
+		// }
+		// if (rang > Integer.parseInt(MainPage.xmlController
+		// .getRankFromXML(username))) {
+		// MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
+		// gameView.setNewTitle(username + " (" + rang + ") ");
+		// }
 	}
 	
 	// generates random number for card selction
