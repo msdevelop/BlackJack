@@ -209,7 +209,7 @@ public class XMLController
 				player.appendChild(password);
 				
 				Element chipCount = doc.createElement("chipcount");
-				chipCount.appendChild(doc.createTextNode("200"));
+				chipCount.appendChild(doc.createTextNode("200000"));
 				player.appendChild(chipCount);
 				
 				Element rang = doc.createElement("rang");

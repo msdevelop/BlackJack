@@ -453,9 +453,9 @@ public class GameController implements ActionListener
 	
 	// ends game after dealer loses
 	public void dealerLose() throws TransformerException {
+		int rank = Integer.parseInt(MainPage.xmlController.getRankFromXML(username));
 		gameView.enablePlayAgain();
-		int reward = (playerBet * 2 + (playerBet / 100 * Integer
-		        .parseInt(MainPage.xmlController.getRankFromXML(username))));
+		int reward = ((playerBet * 2) + (playerBet / 100 * rank) + (rank*3));
 		gameView.setTextStatusBar("Sie haben gewonnen. Gewinn wird ausgezahlt.");
 		gameView.updateUI();
 		this.waitTimer(2000);
@@ -506,39 +506,36 @@ public class GameController implements ActionListener
 	// calculates the playerRank depending on his current chipcount
 	public void calculateRank(int count) throws TransformerException {
 		
-		int lvlUp = 0;
-		while (chipCount >= (Math.pow(2,
-		        ((Integer.parseInt(MainPage.xmlController
-		                .getRankFromXML(username))) + 1))) * 100) {
-			int rang = Integer.parseInt(MainPage.xmlController
-			        .getRankFromXML(username));
-			
-			MainPage.xmlController.saveNewRank(username,
-			        Integer.toString(rang + 1));
-			gameView.setNewTitle(username + " (" + (rang + 1) + ") ");
-			
-			lvlUp++;
+//		int lvlUp = 0;
+//		while (chipCount >= (Math.pow(2, ((Integer.parseInt(MainPage.xmlController.getRankFromXML(username))) + 1))) * 100) {
+//			int rang = Integer.parseInt(MainPage.xmlController.getRankFromXML(username));
+//			
+//			MainPage.xmlController.saveNewRank(username,
+//			        Integer.toString(rang + 1));
+//			gameView.setNewTitle(username + " (" + (rang + 1) + ") ");
+//			
+//			lvlUp++;
+//		}
+//		
+//		if (lvlUp != 0) {
+//			JOptionPane.showMessageDialog(null, "Sie sind " + lvlUp
+//			        + " Level aufgestiegen!");
+//		}
+//		
+		
+		
+		 int rang = 0;
+		 double requirement = 200;
+		
+		 while (count > requirement) {
+		 rang++;
+		 requirement = requirement * 1.5;
+		 }
+		 if (rang > Integer.parseInt(MainPage.xmlController
+		.getRankFromXML(username))) {
+		MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
+		gameView.setNewTitle(username + " (" + rang + ") ");
 		}
-		
-		if (lvlUp != 0) {
-			JOptionPane.showMessageDialog(null, "Sie sind " + lvlUp
-			        + " Level aufgestiegen!");
-		}
-		
-		// alternative logic
-		
-		// int rang = 0;
-		// int requirement = 200;
-		//
-		// while (count > requirement) {
-		// rang++;
-		// requirement = requirement * 2;
-		// }
-		// if (rang > Integer.parseInt(MainPage.xmlController
-		// .getRankFromXML(username))) {
-		// MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
-		// gameView.setNewTitle(username + " (" + rang + ") ");
-		// }
 	}
 	
 	// generates random number for card selction

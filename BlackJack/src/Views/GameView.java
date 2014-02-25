@@ -89,6 +89,7 @@ public class GameView extends JFrame
 		betInput.setColumns(10);
 
 		statusBar = new JTextArea();
+		statusBar.setFocusable(false);
 		statusBar.setBounds(305, 217, 400, 25);
 		statusBar.setEditable(false);
 		getContentPane().add(statusBar);
@@ -106,6 +107,7 @@ public class GameView extends JFrame
 		getContentPane().add(lblPlayer);
 
 		betStatus = new JTextArea();
+		betStatus.setFocusable(false);
 		betStatus.setBounds(176, 280, 72, 25);
 		betStatus.setEditable(false);
 		getContentPane().add(betStatus);
@@ -119,6 +121,7 @@ public class GameView extends JFrame
 		getContentPane().add(textArea);
 
 		chipcountStatus = new JTextArea();
+		chipcountStatus.setFocusable(false);
 		chipcountStatus.setEditable(false);
 		chipcountStatus.setBounds(176, 47, 72, 25);
 		getContentPane().add(chipcountStatus);
@@ -132,22 +135,26 @@ public class GameView extends JFrame
 		getContentPane().add(lblSummeDealer);
 
 		cardSumPlayer = new JTextArea();
+		cardSumPlayer.setFocusable(false);
 		cardSumPlayer.setEditable(false);
 		cardSumPlayer.setBounds(176, 377, 72, 25);
 		getContentPane().add(cardSumPlayer);
 
 		cardSumDealer = new JTextArea();
+		cardSumDealer.setFocusable(false);
 		cardSumDealer.setEditable(false);
 		cardSumDealer.setBounds(176, 329, 72, 25);
 		getContentPane().add(cardSumDealer);
 
 		playerOut = new JTextArea();
+		playerOut.setFocusable(false);
 		playerOut.setAutoscrolls(false);
 		playerOut.setEditable(false);
 		playerOut.setBounds(324, 310, 351, 100);
 		getContentPane().add(playerOut);
 
 		dealerOut = new JTextArea();
+		dealerOut.setFocusable(false);
 		dealerOut.setEditable(false);
 		dealerOut.setBounds(324, 52, 351, 100);
 		getContentPane().add(dealerOut);
