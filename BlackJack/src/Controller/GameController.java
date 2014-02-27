@@ -19,7 +19,10 @@ public class GameController implements ActionListener
 	private GameView gameView;
 	private CardModel[] beginCardStack = new CardModel[52],
 	        playerStack = new CardModel[26], dealerStack = new CardModel[26];
-	private int chipCount, playerBet, playerCount = 0, dealerCount = 0;
+	private static int chipCount;
+	private int	playerBet;
+	private int	playerCount = 0;
+	private int	dealerCount = 0;
 	private String username;
 	
 	// constructor--------------------------------
@@ -83,14 +86,9 @@ public class GameController implements ActionListener
 								        .showMessageDialog(
 								                null,
 								                "Sie erreichen das nächste Level bei "
-								                        + MainPage.xmlController
-								                                .calculateTargetForNextRank(username)
+								                        + MainPage.xmlController.calculateTargetForNextRank(username)
 								                        + " Chips. \nSie benötigen noch "
-								                        + MainPage.xmlController
-								                                .calculateDifferenceToNextrank(
-								                                        username,
-								                                        MainPage.xmlController
-								                                                .calculateTargetForNextRank(username))
+								                        + MainPage.xmlController.calculateDifferenceToNextrank(username, MainPage.xmlController.calculateTargetForNextRank(username))
 								                        + " Chips bis zur nächsten Stufe.");
 							}
 	}
@@ -533,8 +531,12 @@ public class GameController implements ActionListener
 		 }
 		 if (rang > Integer.parseInt(MainPage.xmlController
 		.getRankFromXML(username))) {
+				JOptionPane.showMessageDialog(null, "Sie sind " + (rang - (Integer.parseInt(MainPage.xmlController
+						.getRankFromXML(username))))
+						        + " Level aufgestiegen!");
 		MainPage.xmlController.saveNewRank(username, Integer.toString(rang));
 		gameView.setNewTitle(username + " (" + rang + ") ");
+
 		}
 	}
 	
@@ -571,5 +573,10 @@ public class GameController implements ActionListener
 			gameView.setTextStatusBar("Ungültiger Wetteinsatz!");
 			return false;
 		}
+	}
+	
+	public static int getChipcount()
+	{
+		return chipCount;
 	}
 }

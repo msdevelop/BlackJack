@@ -154,11 +154,16 @@ public class XMLController
 	
 	public int calculateTargetForNextRank(String user) {
 		int rank = Integer.parseInt(getRankFromXML(user));
-		return (int) ((Math.pow(2, rank + 1)) * 100);
+		double requirement = 200;
+		for(int i = 0; i < rank; i++)
+		{
+			requirement = requirement * 1.5;
+		}
+		return (int) requirement;
 	}
 	
 	public int calculateDifferenceToNextrank(String user, int target) {
-		return target - getChipcount(user);
+		return target - GameController.getChipcount();
 	}
 	
 	// returns the chipcount of a player
@@ -209,7 +214,7 @@ public class XMLController
 				player.appendChild(password);
 				
 				Element chipCount = doc.createElement("chipcount");
-				chipCount.appendChild(doc.createTextNode("200000"));
+				chipCount.appendChild(doc.createTextNode("351"));
 				player.appendChild(chipCount);
 				
 				Element rang = doc.createElement("rang");
